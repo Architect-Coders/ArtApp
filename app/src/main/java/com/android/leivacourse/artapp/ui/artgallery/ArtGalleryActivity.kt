@@ -1,10 +1,10 @@
-package com.android.leivacourse.artapp.ui.listaobras
+package com.android.leivacourse.artapp.ui.artgallery
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.android.leivacourse.artapp.R
 
-class ListaObrasActivity : AppCompatActivity() {
+class ArtGalleryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
