@@ -1,16 +1,17 @@
 package com.android.leivacourse.artapp
 
+import com.android.leivacourse.artapp.common.BasePresenter
+import com.android.leivacourse.artapp.common.BaseView
+
 interface ListaObrasContract {
 
-    interface View {
+    interface View : BaseView{
         //TODO Agregar metodos a la interface
     }
 
-    interface Presenter {
-        //TODO Agregar metodos a la interface
+    interface Presenter : BasePresenter {
+        fun getListadoObras()
     }
 
-    interface Model {
-        //TODO Agregar metodos a la interface
-    }
+
 }
