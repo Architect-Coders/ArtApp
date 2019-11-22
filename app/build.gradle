@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.android.leivacourse.artapp"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -32,8 +32,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+    //loggin interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
+    //retrofit converter gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0"
     //ROOM
     implementation 'androidx.room:room-runtime:2.0.0'
     annotationProcessor 'androidx.room:room-compiler:2.0.0'
-
 }
