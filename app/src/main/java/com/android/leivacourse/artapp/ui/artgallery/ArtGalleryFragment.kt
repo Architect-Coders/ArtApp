@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp
+package com.android.leivacourse.artapp.ui.artgallery
 
 
 
@@ -7,17 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.android.leivacourse.artapp.ListaObrasContract.Presenter
-import com.android.leivacourse.artapp.data.ListadoObrasRepository
+import com.android.leivacourse.artapp.GalleryArtRepository
+import com.android.leivacourse.artapp.GalleryArtRepositoryImpl
+import com.android.leivacourse.artapp.R
+import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryContract.Presenter
 
 
-class ListaObrasFragment : Fragment(), ListaObrasContract.View {
+class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
-    private lateinit var mPresenter : ListaObrasContract.Presenter
+    private lateinit var mPresenter : ArtGalleryContract.Presenter
 
 
     companion object {
-        fun newInstance(): ListaObrasFragment = ListaObrasFragment()
+        fun newInstance(): ArtGalleryFragment = ArtGalleryFragment()
 
     }
 
@@ -29,8 +31,7 @@ class ListaObrasFragment : Fragment(), ListaObrasContract.View {
 
 
 
-        mPresenter.getListadoObras()
-
+        mPresenter = ArtGalleryPresenter( GalleryArtRepositoryImpl(GalleryArtRepository), this)
 
         return root
     }
