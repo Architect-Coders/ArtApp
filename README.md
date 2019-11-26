@@ -4,14 +4,9 @@ Aplicacion de galeria de arte donde el usuario puede seleccionar dentro de las o
 ### Mocks guia para la aplicacion:
 
 ------
-#### Pantalla principal
+#### Pantalla principal y  Pantalla de detalle
 
-![Listado de obras de arte](https://user-images.githubusercontent.com/1981941/69645297-93f27500-102b-11ea-81d2-14c4961ac097.PNG)
-
------
-#### Pantalla de detalle
-
-![Detalle de la obra seleccionada](https://user-images.githubusercontent.com/1981941/69645307-981e9280-102b-11ea-9567-9fd045cde510.PNG)
+![Listado de obras de arte](https://user-images.githubusercontent.com/1981941/69645297-93f27500-102b-11ea-81d2-14c4961ac097.PNG) ![Detalle de la obra seleccionada](https://user-images.githubusercontent.com/1981941/69645307-981e9280-102b-11ea-9567-9fd045cde510.PNG)
 
 -----
 #### Pantalla de cameraX
