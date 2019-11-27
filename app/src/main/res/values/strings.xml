@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ArtApp</string>
+    <string name="title_imagen_de_prueba">Title: Imagen de prueba \nDescripcion : Item de Prueba de acuerdo a la applicacion art app</string>
+    <string name="str_add_to_fav">Agregar a favorito</string>
 </resources>

@@ -1,11 +1,15 @@
 package com.android.leivacourse.artapp.api.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
+@Parcelize
 data class CoverPhoto(
 
 	@field:SerializedName("current_user_collections")
-	val currentUserCollections: List<Any?>? = null,
+	val currentUserCollections: @RawValue List<Any?>? = null,
 
 	@field:SerializedName("color")
 	val color: String? = null,
@@ -38,7 +42,7 @@ data class CoverPhoto(
 	val id: String? = null,
 
 	@field:SerializedName("categories")
-	val categories: List<Any?>? = null,
+	val categories:@RawValue List<Any?>? = null,
 
 	@field:SerializedName("promoted_at")
 	val promotedAt: String? = null,
@@ -51,4 +55,4 @@ data class CoverPhoto(
 
 	@field:SerializedName("likes")
 	val likes: Int? = null
-)
+) : Parcelable
