@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">ArtApp</string>
+
+    <!-- MainActivity -->
+    <string name="search">Buscar</string>
+    <string name="chip_all">Todo</string>
+    <string name="chip_pictures">Pinturas</string>
+    <string name="chip_sculptures">Esculturas</string>
+
+    <!-- MENU MAIN (DASHBOARD -->
+    <string name="action_arts">Arts</string>
+    <string name="action_buy">Buy</string>
+    <string name="action_profile">Profile</string>
+
 </resources>
