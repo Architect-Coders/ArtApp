@@ -1,10 +1,8 @@
 package com.android.leivacourse.artapp.api.models
 
-import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+import com.google.gson.annotations.SerializedName
+
 data class Links(
 
 	@field:SerializedName("followers")
@@ -33,4 +31,4 @@ data class Links(
 
 	@field:SerializedName("download_location")
 	val downloadLocation: String? = null
-):Parcelable
+)

@@ -1,12 +1,7 @@
 package com.android.leivacourse.artapp.api.models
 
-import android.os.Parcelable
-import com.android.leivacourse.artapp.api.models.Links
-import com.android.leivacourse.artapp.api.models.ProfileImage
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class User(
 
 	@field:SerializedName("total_photos")
@@ -59,4 +54,4 @@ data class User(
 
 	@field:SerializedName("username")
 	val username: String? = null
-):Parcelable
+)

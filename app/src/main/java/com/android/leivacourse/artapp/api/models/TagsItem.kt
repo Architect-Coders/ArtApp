@@ -1,6 +1,5 @@
 package com.android.leivacourse.artapp.api.models
 
-import com.android.leivacourse.artapp.api.models.Source
 import com.google.gson.annotations.SerializedName
 
 data class TagsItem(

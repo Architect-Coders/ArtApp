@@ -1,10 +1,8 @@
 package com.android.leivacourse.artapp.api.models
 
-import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+import com.google.gson.annotations.SerializedName
+
 data class Urls(
 
 	@field:SerializedName("small")
@@ -21,4 +19,4 @@ data class Urls(
 
 	@field:SerializedName("full")
 	val full: String? = null
-):Parcelable
+)

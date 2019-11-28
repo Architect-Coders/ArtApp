@@ -1,10 +1,8 @@
 package com.android.leivacourse.artapp.api.models
 
-import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+import com.google.gson.annotations.SerializedName
+
 data class ProfileImage(
 
 	@field:SerializedName("small")
@@ -15,4 +13,4 @@ data class ProfileImage(
 
 	@field:SerializedName("medium")
 	val medium: String? = null
-):Parcelable
+)
