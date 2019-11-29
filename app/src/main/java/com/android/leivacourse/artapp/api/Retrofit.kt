@@ -26,7 +26,7 @@ object Retrofit {
                     KEY
                 )
             )
-           // .addInterceptor(networkConnectionInterceptor)
+            //.addInterceptor(networkConnectionInterceptor)
             .build()
 
         return Retrofit.Builder()
@@ -39,7 +39,7 @@ object Retrofit {
     //fun getUnsplashService(networkConnectionInterceptor: NetworkConnectionInterceptor) : UnsplashWs {
     fun getUnsplashService() : UnsplashWs {
         return getInstance(
-
+//networkConnectionInterceptor
         ).create(UnsplashWs::class.java)
     }
 

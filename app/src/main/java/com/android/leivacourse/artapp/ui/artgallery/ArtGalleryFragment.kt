@@ -32,7 +32,6 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
 
         mPresenter = ArtGalleryPresenter( GalleryArtRepositoryImpl(GalleryArtRepository), this)
-      //  mPresenter.getListadoObras(0, 0,"")
         return root
     }
 

@@ -23,34 +23,7 @@ interface GalleryArtRepository  {
             per_pge: Int,
             orientation: String
         ): Response<SearchResults> {
-
            return  com.android.leivacourse.artapp.api.Retrofit.getUnsplashService().getArtPhotos(query, page, per_pge, orientation)
-       /*     val requestInterceptor = Interceptor { chain ->
-
-                val url = chain.request()
-                    .url()
-                    .newBuilder()
-                    .build()
-                val request = chain.request()
-                    .newBuilder()
-                    .url(url)
-                    .build()
-
-                return@Interceptor chain.proceed(request)
-            }
-
-            val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(requestInterceptor)
-                .addInterceptor(connectivityInterceptor)
-                .build()
-
-            return Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl("https://jsonplaceholder.typicode.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(Webservice::class.java)
-                */
 
         }
 
