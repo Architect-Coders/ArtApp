@@ -22,15 +22,6 @@ class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) : GalleryArtR
         }
     }
 
-    override suspend fun getArtPhotos(
-        query: String,
-        page: Int,
-        per_pge: Int,
-        orientation: String
-    ): Response<SearchResults> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 
     companion object {
 
