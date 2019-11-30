@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ArtApp</string>
+    <string name="tool_text">Lorem Ipsum</string>
 </resources>
