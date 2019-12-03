@@ -16,7 +16,7 @@ class ArtWorksAdapter(@NonNull private val listener: (Any) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtWorksViewHolder {
-        return ArtWorksViewHolder(parent.inflate(R.layout.row_artwork))
+        return ArtWorksViewHolder(parent.inflate(R.layout.item_artwork))
     }
 
     override fun getItemCount(): Int {
@@ -34,6 +34,7 @@ class ArtWorksViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
     fun bind(item: Any, listener: (Any) -> Unit) {
         with(view) {
             listener(item)
+
         }
     }
 
