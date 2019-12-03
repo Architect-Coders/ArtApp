@@ -64,4 +64,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0-beta03"
     // search tool
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 }
