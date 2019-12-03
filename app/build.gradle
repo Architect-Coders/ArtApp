@@ -60,7 +60,8 @@ dependencies {
     //ROOM
     implementation 'androidx.room:room-runtime:2.2.2'
     annotationProcessor 'androidx.room:room-compiler:2.2.2'
-
+    //RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.1.0-beta03"
     // search tool
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
 }
