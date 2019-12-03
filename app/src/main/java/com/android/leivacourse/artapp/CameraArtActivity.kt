@@ -130,7 +130,6 @@ class CameraArtActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 textureView.post {
-                    //startCameraForPreview()
                     startCameraForCapture()
                 }
             } else {
@@ -178,10 +177,8 @@ class CameraArtActivity : AppCompatActivity() {
                 true
             }
 
-
-
             R.id.action_share -> {
-
+                 findViewById<View>(R.id.contentData).visibility=View.INVISIBLE
                  screenshotManager = ScreenshotManagerBuilder(this).build()
 
                 val screenshotResult = screenshotManager?.makeScreenshot()
@@ -189,7 +186,9 @@ class CameraArtActivity : AppCompatActivity() {
                     onSuccess = {
                         processScreenShot(it)
                     },
-                    onError = { "Error al realizar captura de pantalla.".toast()}
+                    onError = {
+                        findViewById<View>(R.id.contentData).visibility=View.VISIBLE
+                        "Error al realizar captura de pantalla.".toast()}
                 )
                 true
             }
@@ -205,7 +204,7 @@ class CameraArtActivity : AppCompatActivity() {
         val bitmap = when (screenshot) {
             is ScreenshotBitmap -> screenshot.bitmap
         }
-     var uri= saveBitmap(bitmap)
+        val uri= saveBitmap(bitmap)
         shareIt(uri)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -217,8 +216,8 @@ class CameraArtActivity : AppCompatActivity() {
     fun saveBitmap(bitmap: Bitmap?): Uri? {
 
         val wrapper = ContextWrapper(this)
-        var file = wrapper.getDir("images", Context.MODE_PRIVATE)
-        var imagePath = File(file, "image.jpeg")
+        val file = wrapper.getDir("images", Context.MODE_PRIVATE)
+        val imagePath = File(file, "image.jpeg")
 
         val fos: FileOutputStream
         try {
@@ -240,11 +239,13 @@ class CameraArtActivity : AppCompatActivity() {
 
     private fun shareIt(uri: Uri?) {
         try {
+            findViewById<View>(R.id.contentData).visibility=View.VISIBLE
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
             shareIntent.type = "image/*"
             this.startActivity(Intent.createChooser(shareIntent, "Share Image"))
+
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
         }

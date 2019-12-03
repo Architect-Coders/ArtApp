@@ -16,7 +16,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/contentData"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginLeft="5dp"
@@ -57,11 +57,11 @@
 
     <ImageView
             android:id="@+id/photoImagen"
-            android:background="@drawable/arte"
-            android:adjustViewBounds="true"
             android:layout_width="150dp"
             android:layout_height="200dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            android:adjustViewBounds="true"
+            android:background="@drawable/arte"
+            app:layout_constraintBottom_toTopOf="@+id/contentData"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
