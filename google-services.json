@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "487780060597",
+    "firebase_url": "https://artapp-a121f.firebaseio.com",
+    "project_id": "artapp-a121f",
+    "storage_bucket": "artapp-a121f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487780060597:android:e187947603dd8837f8ddfc",
+        "android_client_info": {
+          "package_name": "com.android.leivacourse.artapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487780060597-99u5b3ev06mb3pckjeh7f0v1cnbs6sjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC92FE-nVuLwdOdeRpwh_siNGSsUcr3I8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487780060597-99u5b3ev06mb3pckjeh7f0v1cnbs6sjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
