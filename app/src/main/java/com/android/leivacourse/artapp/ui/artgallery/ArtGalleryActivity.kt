@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.android.leivacourse.artapp.DetailArtActivity
 import com.android.leivacourse.artapp.R
 
+
 class ArtGalleryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
