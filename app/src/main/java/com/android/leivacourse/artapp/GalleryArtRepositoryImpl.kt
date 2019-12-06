@@ -23,6 +23,9 @@ class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) : GalleryArtR
         } catch (ex: JsonParseException) {
             ex.printStackTrace()
             Output.Error(ex)
+        } catch (ex: Exception){
+            ex.printStackTrace()
+            Output.Error(ex)
         }
     }
 

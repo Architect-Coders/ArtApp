@@ -2,11 +2,13 @@ package com.android.leivacourse.artapp.ui.artgallery
 
 import com.android.leivacourse.artapp.common.BasePresenter
 import com.android.leivacourse.artapp.common.BaseView
+import com.android.leivacourse.artapp.data.local.model.ImageDetail
 
 interface ArtGalleryContract {
 
     interface View : BaseView{
-        //TODO Agregar metodos a la interface
+        fun populateArts(items: List<ImageDetail>)
+        fun errorMessage(message: String?)
     }
 
     interface Presenter : BasePresenter {
