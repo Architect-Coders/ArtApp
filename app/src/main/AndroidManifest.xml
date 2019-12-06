@@ -14,6 +14,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".CameraArtActivity"></activity>
+        <activity android:name=".DetailArtActivity"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".ui.artgallery.ArtGalleryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,7 +1,5 @@
 package com.android.leivacourse.artapp.api.models
 
-import com.android.leivacourse.artapp.api.models.Ancestry
-import com.android.leivacourse.artapp.api.models.CoverPhoto
 import com.google.gson.annotations.SerializedName
 
 data class Source(
