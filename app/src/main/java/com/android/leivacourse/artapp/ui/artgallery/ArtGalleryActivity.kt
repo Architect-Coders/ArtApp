@@ -43,7 +43,7 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
             startActivity(intent)
         }
 
-        with(rv_arts){
+        rv_arts.apply{
             adapter = mArtAdapter
             layoutManager = LinearLayoutManager(context)
         }
