@@ -1,7 +1,5 @@
 package com.android.leivacourse.artapp.api.models
 
-import com.android.leivacourse.artapp.api.models.Links
-import com.android.leivacourse.artapp.api.models.ProfileImage
 import com.google.gson.annotations.SerializedName
 
 data class User(
