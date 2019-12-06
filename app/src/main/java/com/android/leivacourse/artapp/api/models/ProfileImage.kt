@@ -1,5 +1,6 @@
 package com.android.leivacourse.artapp.api.models
 
+
 import com.google.gson.annotations.SerializedName
 
 data class ProfileImage(

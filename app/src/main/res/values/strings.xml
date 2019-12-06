@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">ArtApp</string>
     <string name="dummy">Hola</string>
+    <string name="title_imagen_de_prueba">Title: Imagen de prueba \nDescripcion : Item de Prueba de acuerdo a la applicacion art app</string>
+    <string name="str_add_to_fav">Agregar a favorito</string>
     <string name="tool_text">Lorem Ipsum</string>
+    <!-- MainActivity -->
+    <string name="search">Buscar</string>
+    <string name="chip_all">Todo</string>
+    <string name="chip_pictures">Pinturas</string>
+    <string name="chip_sculptures">Esculturas</string>
+    <!-- MENU MAIN (DASHBOARD -->
+    <string name="action_arts">INICIO</string>
+    <string name="action_buy">COMPRADO</string>
+    <string name="action_profile">PERFIL</string>
 </resources>
