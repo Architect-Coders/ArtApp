@@ -25,7 +25,7 @@ class DetailArtActivity : AppCompatActivity() {
         with(intent.getParcelableExtra<ImageDetail>(PHOTO)) {
             this?.let {
                 photoDetailToolbar.title = title
-                photoDetailImage.loadUrl("${urls?.small}")
+                photoDetailImage.loadUrl("${urls?.regular}")
                 /*photoSummary.text = androidx.core.text.buildSpannedString {
 
                     bold { append("Descripción: ") }
