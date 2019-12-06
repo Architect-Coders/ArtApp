@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.leivacourse.artapp.DetailArtActivity
 import com.android.leivacourse.artapp.GalleryArtRepositoryImpl
@@ -45,7 +46,7 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
 
         rv_arts.apply{
             adapter = mArtAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context,2)
         }
     }
 
