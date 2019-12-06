@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'io.fabric'
+
+apply plugin: 'com.google.gms.google-services'
+
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -58,8 +62,10 @@ dependencies {
     //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.2"
     //ROOM
-    implementation 'androidx.room:room-runtime:2.2.2'
-    annotationProcessor 'androidx.room:room-compiler:2.2.2'
+    implementation 'androidx.room:room-runtime:2.0.0'
+    annotationProcessor 'androidx.room:room-compiler:2.0.0'
+    //Firebase Crashlytics
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     //RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.1.0-beta03"
     // search tool

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.android.leivacourse.artapp.R
+import com.android.leivacourse.artapp.data.local.model.ImageDetail
 import com.android.leivacourse.artapp.utils.inflate
 import com.android.leivacourse.artapp.utils.loadImage
 import kotlinx.android.synthetic.main.item_artwork.view.*
@@ -33,11 +34,11 @@ class ArtWorksAdapter(@NonNull private val listener: (ImageDetail) -> Unit) :
 
 class ArtWorksViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(item: ImageDetail, listener: (Any) -> Unit) {
+    fun bind(item: ImageDetail, listener: (ImageDetail) -> Unit) {
         with(view) {
             listener(item)
-            item_image.loadImage(item.url.small)
-            item_username.text = item.user.username
+            item_image.loadImage(item.urls?.small?:"")
+            item_username.text = item.user?.username
         }
     }
 
