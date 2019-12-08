@@ -13,7 +13,6 @@ import com.android.leivacourse.artapp.api.Retrofit
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
 
     private lateinit var mPresenter : ArtGalleryPresenter
