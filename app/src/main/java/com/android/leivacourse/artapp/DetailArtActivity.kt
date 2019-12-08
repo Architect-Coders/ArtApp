@@ -26,18 +26,18 @@ class DetailArtActivity : AppCompatActivity() {
             this?.let {
                 photoDetailToolbar.title = title
                 photoDetailImage.loadUrl("${urls?.regular}")
-                /*photoSummary.text = androidx.core.text.buildSpannedString {
+                photoSummary.text = androidx.core.text.buildSpannedString {
 
                     bold { append("Descripción: ") }
-                    appendln(description)
+                    appendln(description?:"No disponible")
 
                     bold { append("Autor: ") }
-                    appendln(user?.firstName)
+                    appendln(user?.firstName?:"Anonimo")
 
                     bold { append("Localización: ") }
-                    appendln(user?.location)
+                    appendln(user?.location?:"Desconocida")
 
-                }*/
+                }
             }
         }
     }

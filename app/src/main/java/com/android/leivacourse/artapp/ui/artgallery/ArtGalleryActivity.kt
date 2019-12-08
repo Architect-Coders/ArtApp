@@ -1,17 +1,19 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.leivacourse.artapp.DetailArtActivity
-import com.android.leivacourse.artapp.GalleryArtRepositoryImpl
-import com.android.leivacourse.artapp.R
+import com.android.leivacourse.artapp.*
 import com.android.leivacourse.artapp.api.Retrofit
+import com.android.leivacourse.artapp.data.DEFAULT_ORDER_BY
+import com.android.leivacourse.artapp.data.DEFAULT_ORIENTATION
+import com.android.leivacourse.artapp.data.DEFAULT_QUERY
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.ref.WeakReference
 
 class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
 
@@ -22,7 +24,8 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val repo = GalleryArtRepositoryImpl(Retrofit.getUnsplashService())
+        val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
+        val repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
         mPresenter = ArtGalleryPresenter(repo,this)
 
         initComponents()
@@ -31,15 +34,13 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
 
     override fun onResume() {
         super.onResume()
-        mPresenter.getListadoObras(1,15,"latest")
+        mPresenter.getArtList(DEFAULT_QUERY,1,15, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
     }
 
     private fun initComponents() {
 
         mArtAdapter = ArtWorksAdapter {
-            val intent = Intent(this,DetailArtActivity::class.java)
-            intent.putExtras(bundleOf(DetailArtActivity.PHOTO to it))
-            startActivity(intent)
+            myStartActivity<DetailArtActivity>(bundleOf(DetailArtActivity.PHOTO to it))
         }
 
         rv_arts.apply{

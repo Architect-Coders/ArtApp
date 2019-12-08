@@ -32,7 +32,7 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
 
 
-        mPresenter = ArtGalleryPresenter( GalleryArtRepositoryImpl(GalleryArtRepository), this)
+        //mPresenter = ArtGalleryPresenter( GalleryArtRepositoryImpl.getInstance(GalleryArtRepository), this)
         return root
     }
 

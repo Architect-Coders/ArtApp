@@ -16,9 +16,9 @@ class ArtGalleryPresenter(
         //getListadoObras(1, 1, "") //TODO cambiar parametros
     }
 
-    override fun getListadoObras(page: Int, queryPage: Int, orderBy: String) {
+    override fun getArtList(query:String , page: Int, queryPage: Int, orderBy: String, orientation: String) {
         GlobalScope.launch {
-            val response = mObrasRepository.getArtPhotos(page, queryPage, orderBy)
+            val response = mObrasRepository.getArtPhotos(query, page, queryPage, orderBy, orientation)
             withContext(Dispatchers.Main) {
 
                 when (response){
