@@ -15,7 +15,7 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="350dp"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/black"
-            android:alpha="0.7"
+            android:alpha="0.8"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -58,7 +58,7 @@
                     android:padding="16dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:text="" />
             <LinearLayout
                     android:layout_width="match_parent"
@@ -69,24 +69,15 @@
                     android:transitionGroup="true">
 
                 <Button
-                        android:background="@android:color/white"
+                        android:backgroundTint="@android:color/white"
                         android:textColor="@android:color/black"
                         android:text="Vista Previa"
                         android:textSize="14sp"
+                        android:typeface="normal"
                         android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                <Button
-                        android:background="@android:color/holo_red_dark"
-                        android:textColor="@android:color/white"
-                        android:text="Comprar"
-                        android:textSize="14sp"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
 
             </LinearLayout>
 

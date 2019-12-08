@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.text.bold
+import androidx.core.text.buildSpannedString
 import com.android.leivacourse.artapp.api.models.CoverPhoto
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
 import kotlinx.android.synthetic.main.activity_detail_art.*
@@ -26,16 +27,16 @@ class DetailArtActivity : AppCompatActivity() {
             this?.let {
                 photoDetailToolbar.title = title
                 photoDetailImage.loadUrl("${urls?.regular}")
-                photoSummary.text = androidx.core.text.buildSpannedString {
+                photoSummary.text = buildSpannedString {
 
                     bold { append("Descripción: ") }
-                    appendln(description?:"No disponible")
+                    appendln(description?:"N/A")
 
                     bold { append("Autor: ") }
-                    appendln(user?.firstName?:"Anonimo")
+                    appendln(user?.firstName?:"N/A")
 
                     bold { append("Localización: ") }
-                    appendln(user?.location?:"Desconocida")
+                    appendln(user?.location?:"N/A")
 
                 }
             }
