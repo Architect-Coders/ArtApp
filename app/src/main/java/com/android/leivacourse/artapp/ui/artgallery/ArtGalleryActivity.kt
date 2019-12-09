@@ -1,33 +1,73 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.android.leivacourse.artapp.GalleryArtRepository
-import com.android.leivacourse.artapp.GalleryArtRepositoryImpl
-import com.android.leivacourse.artapp.DetailArtActivity
-import com.android.leivacourse.artapp.R
-import com.android.leivacourse.artapp.utils.replaceFragmentInActivity
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.leivacourse.artapp.*
+import com.android.leivacourse.artapp.api.Retrofit
+import com.android.leivacourse.artapp.data.DEFAULT_ORDER_BY
+import com.android.leivacourse.artapp.data.DEFAULT_ORIENTATION
+import com.android.leivacourse.artapp.data.DEFAULT_QUERY
+import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
+import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.ref.WeakReference
 
+class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
 
-class ArtGalleryActivity : AppCompatActivity() {
-
-    private lateinit var listaobrasFragment : ArtGalleryFragment
-    private lateinit var artGalleryPresenter : ArtGalleryPresenter
+    private lateinit var mPresenter : ArtGalleryPresenter
+    private lateinit var mArtAdapter: ArtWorksAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        listaobrasFragment = supportFragmentManager
-            .findFragmentById(R.id.content) as ArtGalleryFragment?
-            ?: ArtGalleryFragment.newInstance().apply {
-                arguments = Bundle().apply {
-                }
-            }.also { replaceFragmentInActivity(it, R.id.content) }
+        val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
+        val repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
+        mPresenter = ArtGalleryPresenter(repo,this)
+
+        initComponents()
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        mPresenter.getArtList(DEFAULT_QUERY,1,15, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
+    }
+
+    private fun initComponents() {
+
+        mArtAdapter = ArtWorksAdapter {
+            myStartActivity<DetailArtActivity>(bundleOf(DetailArtActivity.PHOTO to it))
+        }
+
+        rv_arts.apply{
+            adapter = mArtAdapter
+            layoutManager = GridLayoutManager(context,2)
+        }
+    }
+
+    override fun populateArts(items: List<ImageDetail>) {
+        mArtAdapter.items = items
+    }
+
+    override fun errorMessage(message: String?) {
+        message?.let {
+            Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun setPresenter(presenter: Any?) {
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //it will be onDetach for the presenter
+    }
 
 
 }

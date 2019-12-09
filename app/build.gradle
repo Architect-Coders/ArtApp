@@ -26,13 +26,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", 'BASE_URL', "\"https://api.unsplash.com/\""
+            buildConfigField "String", 'KEY', "\"cf1328d162e818293a2d8a34ee1d0f039fbb5460d6d45e5ef5a304f313cba2ec\""
+        }
+
+        debug {
+            buildConfigField "String", 'BASE_URL', "\"https://api.unsplash.com/\""
+            buildConfigField "String", 'KEY', "\"cf1328d162e818293a2d8a34ee1d0f039fbb5460d6d45e5ef5a304f313cba2ec\""
         }
     }
 
     dataBinding {
         enabled = true
     }
-    
+
     kotlinOptions {
         jvmTarget = "1.8"
     }

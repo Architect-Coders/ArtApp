@@ -14,7 +14,7 @@ data class ResultsItem(
 	val createdAt: String? = null,
 
 	@field:SerializedName("description")
-	val description: Any? = null,
+	val description: String? = null,
 
 	@field:SerializedName("liked_by_user")
 	val likedByUser: Boolean? = null,

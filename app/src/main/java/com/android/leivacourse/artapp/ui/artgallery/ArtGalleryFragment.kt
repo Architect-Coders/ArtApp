@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.android.leivacourse.artapp.GalleryArtRepository
 import com.android.leivacourse.artapp.GalleryArtRepositoryImpl
 import com.android.leivacourse.artapp.R
+import com.android.leivacourse.artapp.data.local.model.ImageDetail
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryContract.Presenter
 
 
@@ -31,7 +32,7 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
 
 
-        mPresenter = ArtGalleryPresenter( GalleryArtRepositoryImpl(GalleryArtRepository), this)
+        //mPresenter = ArtGalleryPresenter( GalleryArtRepositoryImpl.getInstance(GalleryArtRepository), this)
         return root
     }
 
@@ -39,6 +40,14 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
     override fun onResume() {
         super.onResume()
         mPresenter.start()
+    }
+
+    override fun populateArts(items: List<ImageDetail>) {
+
+    }
+
+    override fun errorMessage(message: String?) {
+
     }
 
 

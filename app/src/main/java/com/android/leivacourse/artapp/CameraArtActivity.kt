@@ -1,16 +1,14 @@
 package com.android.leivacourse.artapp
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.util.Rational
 import android.util.Size
@@ -27,7 +25,10 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import eu.bolt.screenshotty.*
 import kotlinx.android.synthetic.main.activity_camera_art.*
-import java.io.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class CameraArtActivity : AppCompatActivity() {

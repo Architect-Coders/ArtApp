@@ -13,6 +13,6 @@
     <string name="chip_sculptures">Esculturas</string>
     <!-- MENU MAIN (DASHBOARD -->
     <string name="action_arts">INICIO</string>
-    <string name="action_buy">COMPRADO</string>
+    <string name="action_fav">FAVORITOS</string>
     <string name="action_profile">PERFIL</string>
 </resources>

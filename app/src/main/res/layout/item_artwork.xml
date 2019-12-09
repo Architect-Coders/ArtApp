@@ -3,10 +3,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_item_art"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:layout_margin="@dimen/card_spacing"
         app:cardElevation="4dp"
-        app:cardCornerRadius="40dp">
+        app:cardCornerRadius="8dp">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -16,14 +16,14 @@
         <ImageView
                 android:id="@+id/item_image"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="165dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@mipmap/ic_launcher"
                 android:contentDescription="@string/tool_text" />
 
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="35dp"
                 android:orientation="horizontal">
 
             <TextView

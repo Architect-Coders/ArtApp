@@ -6,13 +6,14 @@ import android.net.NetworkCapabilities
 import com.android.leivacourse.artapp.api.models.NoInternetException
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.lang.ref.WeakReference
 
 
 class NetworkConnectionInterceptor(
-    context: Context
+    context: WeakReference<Context>
 ) : Interceptor {
 
-    private val applicationContext = context.applicationContext
+    private val applicationContext = context.get()?.applicationContext
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!isInternetAvailable())
@@ -23,7 +24,7 @@ class NetworkConnectionInterceptor(
     private fun isInternetAvailable(): Boolean {
         var result = false
         val connectivityManager =
-            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+            applicationContext?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         connectivityManager?.let {
             it.getNetworkCapabilities(connectivityManager.activeNetwork)?.apply {
                 result = when {
