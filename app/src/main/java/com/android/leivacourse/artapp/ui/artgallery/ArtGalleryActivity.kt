@@ -9,13 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.android.leivacourse.artapp.*
-import com.android.leivacourse.artapp.DetailArtActivity
-import com.android.leivacourse.artapp.GalleryArtRepositoryImpl
-import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.api.Retrofit
 import com.android.leivacourse.artapp.data.*
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
-import com.android.leivacourse.artapp.myStartActivity
 import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
@@ -25,7 +21,7 @@ import java.lang.ref.WeakReference
 class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
     FloatingSearchView.OnSearchListener {
 
-    private lateinit var mPresenter : ArtGalleryPresenter
+    private lateinit var mPresenter: ArtGalleryPresenter
     private lateinit var mArtAdapter: ArtWorksAdapter
 
     private lateinit var lottieAnimation: LottieAnimationView
@@ -78,7 +74,6 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
 
     override fun hideLoader() {
         changeLoaderStatus(lottieAnimation, GONE)
-
     }
 
     override fun errorMessage(message: String?) {
