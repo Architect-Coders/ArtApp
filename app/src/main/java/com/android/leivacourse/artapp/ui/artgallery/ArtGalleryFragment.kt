@@ -46,6 +46,14 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
     }
 
+    override fun showLoader() {
+
+    }
+
+    override fun hideLoader() {
+
+    }
+
     override fun errorMessage(message: String?) {
 
     }

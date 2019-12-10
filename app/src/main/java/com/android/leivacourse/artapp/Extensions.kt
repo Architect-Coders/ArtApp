@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 
 fun ImageView.loadUrl(url: String) {
@@ -17,4 +18,8 @@ inline fun <reified T: AppCompatActivity> AppCompatActivity.myStartActivity(@Nul
         intent.putExtras(bundle)
     }
     startActivity(intent)
+}
+
+fun AppCompatActivity.changeLoaderStatus(lottieAnimationView: LottieAnimationView, status: Int) {
+    lottieAnimationView.visibility = status
 }
