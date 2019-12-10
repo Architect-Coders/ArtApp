@@ -29,17 +29,15 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
         setContentView(R.layout.activity_main)
 
         val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
-        val repo =
-            GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
+        val repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
         mPresenter = ArtGalleryPresenter(repo, this)
 
         initComponents()
-        sv_arts.setOnSearchListener(this)
+        getArtList(DEFAULT_QUERY)
     }
 
     override fun onResume() {
         super.onResume()
-        getArtList(DEFAULT_QUERY)
     }
 
     private fun getArtList(currentQuery: String?) =
@@ -58,6 +56,7 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
             adapter = mArtAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
+        sv_arts.setOnSearchListener(this)
     }
 
     override fun populateArts(items: List<ImageDetail>) =
