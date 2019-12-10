@@ -16,10 +16,16 @@ class ArtGalleryPresenter(
         //getListadoObras(1, 1, "") //TODO cambiar parametros
     }
 
+    override fun initLoader() {
+        mArtGalleryView.showLoader()
+    }
+
     override fun getArtList(query:String , page: Int, queryPage: Int, orderBy: String, orientation: String) {
         GlobalScope.launch {
             val response = mObrasRepository.getArtPhotos(query, page, queryPage, orderBy, orientation)
             withContext(Dispatchers.Main) {
+
+                mArtGalleryView.hideLoader()
 
                 when (response){
 
@@ -35,4 +41,6 @@ class ArtGalleryPresenter(
             }
         }
     }
+
+
 }

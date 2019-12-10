@@ -8,11 +8,14 @@ interface ArtGalleryContract {
 
     interface View : BaseView{
         fun populateArts(items: List<ImageDetail>)
+        fun showLoader()
+        fun hideLoader()
         fun errorMessage(message: String?)
     }
 
     interface Presenter : BasePresenter {
         fun getArtList(query:String , page: Int, queryPage: Int, orderBy: String, orientation: String)
+        fun initLoader()
     }
 
 }

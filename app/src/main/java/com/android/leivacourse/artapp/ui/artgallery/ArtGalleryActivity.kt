@@ -1,11 +1,13 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.android.leivacourse.artapp.*
 import com.android.leivacourse.artapp.api.Retrofit
 import com.android.leivacourse.artapp.data.DEFAULT_ORDER_BY
@@ -21,6 +23,8 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
     private lateinit var mPresenter : ArtGalleryPresenter
     private lateinit var mArtAdapter: ArtWorksAdapter
 
+    private lateinit var lottieAnimation: LottieAnimationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,10 +39,13 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
 
     override fun onResume() {
         super.onResume()
+        mPresenter.initLoader()
         mPresenter.getArtList(DEFAULT_QUERY,1,15, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
     }
 
     private fun initComponents() {
+
+        lottieAnimation = findViewById(R.id.loader_view)
 
         mArtAdapter = ArtWorksAdapter {
             myStartActivity<DetailArtActivity>(bundleOf(DetailArtActivity.PHOTO to it))
@@ -52,6 +59,15 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
 
     override fun populateArts(items: List<ImageDetail>) {
         mArtAdapter.items = items
+    }
+
+    override fun showLoader() {
+        changeLoaderStatus(lottieAnimation, VISIBLE)
+    }
+
+    override fun hideLoader() {
+        changeLoaderStatus(lottieAnimation, GONE)
+
     }
 
     override fun errorMessage(message: String?) {
