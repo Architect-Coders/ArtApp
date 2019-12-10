@@ -37,7 +37,8 @@ class ArtWorksViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
     fun bind(item: ImageDetail, listener: (ImageDetail) -> Unit) {
         with(view) {
             item_image.loadImage(item.urls?.small?:"")
-            item_username.text = item.user?.username
+            item_username.text = item.user?.name?:"N/A"
+            item_photouser.loadImage(item.user?.profileImage?.small?:"")
             view.setOnClickListener { listener(item) }
         }
     }

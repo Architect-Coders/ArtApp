@@ -17,4 +17,12 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="AppThemeBar" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/darker_gray</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:drawableTint">@android:color/black</item>
+    </style>
+
 </resources>

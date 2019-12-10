@@ -8,9 +8,9 @@
             android:title="@string/action_share"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_share"/>
- <!--   <item
+     <item
             android:id="@+id/action_fav"
             android:title="@string/action_favorite"
             app:showAsAction="ifRoom"
-            android:icon="@drawable/ic_fav"/>-->
+            android:icon="@drawable/ic_fav"/>
 </menu>
