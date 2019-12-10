@@ -1,10 +1,14 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
+import com.airbnb.lottie.LottieAnimationView
+import com.android.leivacourse.artapp.*
 import com.android.leivacourse.artapp.DetailArtActivity
 import com.android.leivacourse.artapp.GalleryArtRepositoryImpl
 import com.android.leivacourse.artapp.R
@@ -21,8 +25,10 @@ import java.lang.ref.WeakReference
 class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
     FloatingSearchView.OnSearchListener {
 
-    private lateinit var mPresenter: ArtGalleryPresenter
+    private lateinit var mPresenter : ArtGalleryPresenter
     private lateinit var mArtAdapter: ArtWorksAdapter
+
+    private lateinit var lottieAnimation: LottieAnimationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,7 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
 
     override fun onResume() {
         super.onResume()
+        mPresenter.initLoader()
     }
 
     private fun getArtList(currentQuery: String?) =
@@ -47,6 +54,8 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
             mPresenter.getArtList(DEFAULT_QUERY, DEFAULT_SEARCH_PAGE, QUERY_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
 
     private fun initComponents() {
+
+        lottieAnimation = findViewById(R.id.loader_view)
 
         mArtAdapter = ArtWorksAdapter {
             myStartActivity<DetailArtActivity>(bundleOf(DetailArtActivity.PHOTO to it))
@@ -62,6 +71,15 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
     override fun populateArts(items: List<ImageDetail>) =
         if (items.isNotEmpty()) mArtAdapter.items =
             items else errorMessage(getString(R.string.no_results))
+
+    override fun showLoader() {
+        changeLoaderStatus(lottieAnimation, VISIBLE)
+    }
+
+    override fun hideLoader() {
+        changeLoaderStatus(lottieAnimation, GONE)
+
+    }
 
     override fun errorMessage(message: String?) {
         message?.let {
