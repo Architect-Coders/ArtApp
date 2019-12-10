@@ -12,7 +12,6 @@
             android:theme="@style/AppTheme.DarkOverlay"
             android:fitsSystemWindows="true">
 
-
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
@@ -49,40 +48,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:padding="16dp"
                 android:transitionGroup="true">
 
             <TextView
                     android:id="@+id/photoSummary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:text="" />
+
+
+
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginTop="16dp"
                     android:transitionGroup="true">
 
-                <Button
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="@android:color/black"
-                        android:text="Vista Previa"
-                        android:textSize="14sp"
-                        android:typeface="normal"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
+                <ImageView
+                        android:id="@+id/photoUser"
+                        android:layout_gravity="center"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"/>
+
+                <TextView
+                        android:id="@+id/photoUserName"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:text="" />
+
 
             </LinearLayout>
 
 
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:transitionGroup="true">
+
+                <Button
+                        android:id="@+id/btnPreview"
+                        android:backgroundTint="@android:color/white"
+                        android:textColor="@android:color/black"
+                        android:text="Vista Previa"
+                        android:textSize="14sp"
+                        android:typeface="normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

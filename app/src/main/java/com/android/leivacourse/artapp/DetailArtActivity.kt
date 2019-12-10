@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.android.leivacourse.artapp.api.models.CoverPhoto
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.utils.loadImage
 import kotlinx.android.synthetic.main.activity_detail_art.*
 
 class DetailArtActivity : AppCompatActivity() {
@@ -38,8 +40,21 @@ class DetailArtActivity : AppCompatActivity() {
                     bold { append("Localización: ") }
                     appendln(user?.location?:"N/A")
 
+                    val mPrice= String.format("%.2f",getRamdomPrice)
+
+                    bold { append("Precio: ") }
+                    appendln("$mPrice MXN")
+
                 }
+                photoUser.loadUrl("${user?.profileImage?.small}")
+                photoUserName.text=user?.name?:"N/A"
             }
+        }
+
+        btnPreview.setOnClickListener {
+            val value:Any? =intent.getParcelableExtra<ImageDetail>(PHOTO)
+            myStartActivity<CameraArtActivity>(bundleOf(PHOTO to value ))
+
         }
     }
 

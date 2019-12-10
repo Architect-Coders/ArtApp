@@ -13,7 +13,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".CameraArtActivity"></activity>
+        <activity android:name=".CameraArtActivity"
+                android:theme="@style/AppThemeBar">
+        </activity>
         <activity android:name=".DetailArtActivity"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>

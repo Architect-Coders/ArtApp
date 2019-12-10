@@ -1,6 +1,7 @@
 package com.android.leivacourse.artapp
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -23,8 +24,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import com.android.leivacourse.artapp.DetailArtActivity.Companion.PHOTO
+import com.android.leivacourse.artapp.data.local.model.ImageDetail
 import eu.bolt.screenshotty.*
 import kotlinx.android.synthetic.main.activity_camera_art.*
+import kotlinx.android.synthetic.main.activity_detail_art.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -36,6 +40,7 @@ class CameraArtActivity : AppCompatActivity() {
     private var subscription:ScreenshotResult.Subscription?=null
     private val REQUEST_CODE_PERMISSIONS = 999
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_art)
@@ -44,20 +49,24 @@ class CameraArtActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title=""
-      /*  with(intent.getParcelableExtra<CoverPhoto>(MOVIE)) {
-           photoDetail.text
-       //TODO
-        }*/
+        with(intent.getParcelableExtra<ImageDetail>(PHOTO)) {
+            this?.let {
+                photoImagen.loadUrl("${urls?.regular}")
+                photoDetail.text = buildSpannedString {
 
-        photoDetail.text = buildSpannedString {
-            bold { append("Descripción: ") }
-            appendln("Retrato Paisaje")
+                    bold { append("Descripción: ") }
+                    appendln(description?:"N/A")
 
-            bold { append("Autor: ") }
-            appendln("Jorge Vergara")
+                    bold { append("Autor: ") }
+                    appendln(user?.name?:"N/A")
 
-            bold { append("Localización: ") }
-            appendln("Guadalajara, Jal. (RIP)")
+                    bold { append("Localización: ") }
+                    appendln(user?.location?:"N/A")
+
+                }
+                val mPrice= String.format("%.2f",getRamdomPrice)
+                btnPrice.setText("$ $mPrice MXN")
+            }
         }
 
 
