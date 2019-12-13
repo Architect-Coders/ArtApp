@@ -1,14 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ui.artgallery.ArtGalleryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/dummy" />
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_start"
+            app:layout_constraintGuide_percent=".03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
 
-</FrameLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            app:layout_constraintGuide_percent=".97"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+
+    <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/sv_arts"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            app:floatingSearch_dimBackground="false"
+            app:floatingSearch_dismissOnOutsideTouch="true"
+            app:floatingSearch_hintTextColor="@color/ligth_gray"
+            app:floatingSearch_leftActionMode="showSearch"
+            app:floatingSearch_searchHint="@string/search"
+            app:floatingSearch_showSearchKey="true"
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="12dp" />
+
+    <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            app:layout_constraintEnd_toEndOf="@+id/gl_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_start"
+            app:layout_constraintTop_toBottomOf="@+id/sv_arts"
+            app:singleSelection="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp">
+
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chip_art_all"
+                style="@style/AppTheme"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@drawable/chip_state_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/chip_all" />
+
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chip_art_pictures"
+                style="@style/AppTheme"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@drawable/chip_state_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:checkable="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/chip_pictures" />
+
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chip_art_sculptures"
+                style="@style/AppTheme"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@drawable/chip_state_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:checkable="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/chip_sculptures" />
+
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_arts"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/gl_end"
+            app:layout_constraintStart_toStartOf="@+id/gl_start"
+            app:layout_constraintTop_toBottomOf="@+id/chip_group"
+            app:spanCount="2" />
+
+    <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loader_view"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loader" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
