@@ -15,4 +15,5 @@
     <string name="action_arts">INICIO</string>
     <string name="action_fav">FAVORITOS</string>
     <string name="action_profile">PERFIL</string>
+    <string name="no_results">La busqueda no arrojo resultados</string>
 </resources>
