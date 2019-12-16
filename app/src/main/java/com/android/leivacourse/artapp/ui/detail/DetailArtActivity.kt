@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp
+package com.android.leivacourse.artapp.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
-import com.android.leivacourse.artapp.api.models.CoverPhoto
+import com.android.leivacourse.artapp.ui.camera.CameraArtActivity
+import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
-import com.android.leivacourse.artapp.utils.loadImage
+import com.android.leivacourse.artapp.utils.loadUrl
+import com.android.leivacourse.artapp.utils.myStartActivity
 import kotlinx.android.synthetic.main.activity_detail_art.*
 
 class DetailArtActivity : AppCompatActivity() {
@@ -53,7 +55,8 @@ class DetailArtActivity : AppCompatActivity() {
 
         btnPreview.setOnClickListener {
             val value:Any? =intent.getParcelableExtra<ImageDetail>(PHOTO)
-            myStartActivity<CameraArtActivity>(bundleOf(PHOTO to value ))
+            myStartActivity<CameraArtActivity>(bundleOf(
+                PHOTO to value ))
 
         }
     }

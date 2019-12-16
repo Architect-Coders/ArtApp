@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp
+package com.android.leivacourse.artapp.ui.artgallery
 
 import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.utils.Output
