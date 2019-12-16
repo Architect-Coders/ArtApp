@@ -1,6 +1,5 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
-import com.android.leivacourse.artapp.GalleryArtRepository
 import com.android.leivacourse.artapp.utils.Output
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

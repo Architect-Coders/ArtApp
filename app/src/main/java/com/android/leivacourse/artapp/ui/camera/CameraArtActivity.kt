@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp
+package com.android.leivacourse.artapp.ui.camera
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -24,11 +24,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
-import com.android.leivacourse.artapp.DetailArtActivity.Companion.PHOTO
+import com.android.leivacourse.artapp.R
+import com.android.leivacourse.artapp.ui.detail.DetailArtActivity.Companion.PHOTO
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.utils.loadUrl
 import eu.bolt.screenshotty.*
 import kotlinx.android.synthetic.main.activity_camera_art.*
-import kotlinx.android.synthetic.main.activity_detail_art.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream

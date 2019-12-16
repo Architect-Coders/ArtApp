@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/layout_container"
-        tools:context=".CameraArtActivity">
+        tools:context=".ui.camera.CameraArtActivity">
     <TextureView
             android:id="@+id/textureView"
             android:layout_width="match_parent"

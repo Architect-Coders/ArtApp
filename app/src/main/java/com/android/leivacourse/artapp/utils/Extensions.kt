@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp
+package com.android.leivacourse.artapp.utils
 
 import android.content.Intent
 import android.os.Bundle

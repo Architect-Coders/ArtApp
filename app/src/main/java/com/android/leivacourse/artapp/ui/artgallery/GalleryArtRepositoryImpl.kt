@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp
+package com.android.leivacourse.artapp.ui.artgallery
 
 import com.android.leivacourse.artapp.api.models.NoInternetException
 import com.android.leivacourse.artapp.api.models.SearchResults
@@ -7,7 +7,8 @@ import com.android.leivacourse.artapp.utils.Output
 import com.google.gson.JsonParseException
 
 
-class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) : GalleryArtRepository{
+class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) :
+    GalleryArtRepository {
 
     override suspend fun getArtPhotos(query: String,page: Int, queryPage: Int,orderBy: String, orientation: String): Output<SearchResults> {
         return try {
@@ -40,7 +41,10 @@ class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) : GalleryArtR
          * @return the [TasksRepository] instance
          */
         fun getInstance(unsplashWs: UnsplashWs): GalleryArtRepository {
-            return INSTANCE ?: GalleryArtRepositoryImpl(unsplashWs)
+            return INSTANCE
+                ?: GalleryArtRepositoryImpl(
+                    unsplashWs
+                )
                 .apply { INSTANCE = this }
         }
 

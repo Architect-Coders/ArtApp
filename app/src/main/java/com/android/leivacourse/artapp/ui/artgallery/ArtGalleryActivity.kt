@@ -14,7 +14,10 @@ import com.android.leivacourse.artapp.data.DEFAULT_ORDER_BY
 import com.android.leivacourse.artapp.data.DEFAULT_ORIENTATION
 import com.android.leivacourse.artapp.data.DEFAULT_QUERY
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
 import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
+import com.android.leivacourse.artapp.utils.changeLoaderStatus
+import com.android.leivacourse.artapp.utils.myStartActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
@@ -48,7 +51,8 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View{
         lottieAnimation = findViewById(R.id.loader_view)
 
         mArtAdapter = ArtWorksAdapter {
-            myStartActivity<DetailArtActivity>(bundleOf(DetailArtActivity.PHOTO to it))
+            myStartActivity<DetailArtActivity>(bundleOf(
+                DetailArtActivity.PHOTO to it))
         }
 
         rv_arts.apply{
