@@ -12,7 +12,7 @@ class ArtGalleryPresenter(
     private val mArtGalleryView: ArtGalleryContract.View) : ArtGalleryContract.Presenter {
 
     override fun start() {
-        //getListadoObras(1, 1, "") //TODO cambiar parametros
+
     }
 
     override fun initLoader() {
