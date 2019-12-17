@@ -15,7 +15,6 @@ interface ArtGalleryContract {
 
     interface Presenter : BasePresenter {
         fun getArtList(query:String , page: Int, queryPage: Int, orderBy: String, orientation: String)
-        fun initLoader()
     }
 
 }

@@ -75,10 +75,6 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
         }
     }
 
-    override fun setPresenter(presenter: Any?) {
-
-    }
-
     companion object {
         val TAG = "ArtGalleryFragment:TAG"
         fun newInstance(): ArtGalleryFragment = ArtGalleryFragment()

@@ -2,5 +2,5 @@ package com.android.leivacourse.artapp.common
 
 interface BasePresenter {
 
-    fun start()
+    fun initLoader()
 }
