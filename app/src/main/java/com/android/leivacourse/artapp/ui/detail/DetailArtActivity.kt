@@ -15,10 +15,12 @@ import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.myStartActivity
 import kotlinx.android.synthetic.main.activity_detail_art.*
 
-class DetailArtActivity : AppCompatActivity() {
+class DetailArtActivity : AppCompatActivity(), DetailArtPresenter.View {
     companion object {
         const val PHOTO = "DetailArtActivity:photo"
     }
+
+    private val detailPresenter = DetailArtPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,31 +29,7 @@ class DetailArtActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        with(intent.getParcelableExtra<ImageDetail>(PHOTO)) {
-            this?.let {
-                photoDetailToolbar.title = title
-                photoDetailImage.loadUrl("${urls?.regular}")
-                photoSummary.text = buildSpannedString {
-
-                    bold { append("Descripción: ") }
-                    appendln(description?:"N/A")
-
-                    bold { append("Autor: ") }
-                    appendln(user?.firstName?:"N/A")
-
-                    bold { append("Localización: ") }
-                    appendln(user?.location?:"N/A")
-
-                    val mPrice= String.format("%.2f",getRamdomPrice)
-
-                    bold { append("Precio: ") }
-                    appendln("$mPrice MXN")
-
-                }
-                photoUser.loadUrl("${user?.profileImage?.small}")
-                photoUserName.text=user?.name?:"N/A"
-            }
-        }
+        detailPresenter.onCreate(this, intent.getParcelableExtra(PHOTO))
 
         btnPreview.setOnClickListener {
             val value:Any? =intent.getParcelableExtra<ImageDetail>(PHOTO)
@@ -80,5 +58,29 @@ class DetailArtActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+
+    override fun updateUI(art: ImageDetail) = with(art){
+        photoDetailToolbar.title = title
+        photoDetailImage.loadUrl("${urls?.regular}")
+        photoSummary.text = buildSpannedString {
+
+            bold { append("Descripción: ") }
+            appendln(description?:"N/A")
+
+            bold { append("Autor: ") }
+            appendln(user?.firstName?:"N/A")
+
+            bold { append("Localización: ") }
+            appendln(user?.location?:"N/A")
+
+            val mPrice= String.format("%.2f",getRamdomPrice)
+
+            bold { append("Precio: ") }
+            appendln("$mPrice MXN")
+
+        }
+        photoUser.loadUrl("${user?.profileImage?.small}")
+        photoUserName.text=user?.name?:"N/A"
+    }
 
 }
