@@ -36,3 +36,7 @@ fun AppCompatActivity.changeLoaderStatus(lottieAnimationView: LottieAnimationVie
 fun Fragment.changeLoaderStatus(lottieAnimationView: LottieAnimationView, status: Int) {
     lottieAnimationView.visibility = status
 }
+
+inline fun <reified T : Fragment> getInstance() : T{
+    return T::class.java as T
+}

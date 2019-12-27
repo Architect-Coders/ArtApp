@@ -1,11 +1,11 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.ui.artgallery.fav.FavoriteFragment
+import com.android.leivacourse.artapp.ui.artgallery.profile.ProfileFragment
 import com.android.leivacourse.artapp.utils.replaceFragmentInActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -34,7 +34,8 @@ class ArtGalleryActivity : AppCompatActivity() {
                     tag = FavoriteFragment.TAG
                 }
                 R.id.action_profile -> {
-
+                    fragment = ProfileFragment.newInstance()
+                    tag = ProfileFragment.TAG
                 }
             }
             replaceFragmentInActivity(fragment, R.id.container_fragments,tag)

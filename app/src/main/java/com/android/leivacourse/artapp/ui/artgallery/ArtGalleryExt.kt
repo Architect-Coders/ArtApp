@@ -50,9 +50,3 @@ fun ProfileImage.toProfileImage(): com.android.leivacourse.artapp.data.local.mod
         )
     }
 }
-
-// return user type com.android.leivacourse.artapp.data.local.model
-// map from user com.android.leivacourse.artapp.api.models
-
-// profileImage return com.android.leivacourse.artapp.data.local.model
-// profile image convert com.android.leivacourse.artapp.api.models
