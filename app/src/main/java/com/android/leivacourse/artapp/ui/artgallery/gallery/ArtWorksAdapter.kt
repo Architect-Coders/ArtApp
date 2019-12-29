@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp.ui.artgallery
+package com.android.leivacourse.artapp.ui.artgallery.gallery
 
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,11 @@ class ArtWorksAdapter(@NonNull private val listener: (ImageDetail) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtWorksViewHolder {
-        return ArtWorksViewHolder(parent.inflate(R.layout.item_artwork))
+        return ArtWorksViewHolder(
+            parent.inflate(
+                R.layout.item_artwork
+            )
+        )
     }
 
     override fun getItemCount(): Int {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.ui.artgallery.fav.FavoriteFragment
+import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtGalleryFragment
 import com.android.leivacourse.artapp.ui.artgallery.profile.ProfileFragment
 import com.android.leivacourse.artapp.utils.replaceFragmentInActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,7 +19,9 @@ class ArtGalleryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        replaceFragmentInActivity(ArtGalleryFragment.newInstance(), R.id.container_fragments,ArtGalleryFragment.TAG)
+        replaceFragmentInActivity(
+            ArtGalleryFragment.newInstance(), R.id.container_fragments,
+            ArtGalleryFragment.TAG)
         setupNavigation()
     }
 

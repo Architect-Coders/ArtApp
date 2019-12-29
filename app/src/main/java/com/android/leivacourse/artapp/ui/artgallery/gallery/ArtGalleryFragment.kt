@@ -1,4 +1,4 @@
-package com.android.leivacourse.artapp.ui.artgallery
+package com.android.leivacourse.artapp.ui.artgallery.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,13 @@ import java.lang.ref.WeakReference
 
 class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
-    private lateinit var mPresenter: ArtGalleryPresenter
+    private val mPresenter: ArtGalleryPresenter by lazy {
+        val networkInterceptor = NetworkConnectionInterceptor(WeakReference(context!!))
+        val repo =
+            GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
+
+        ArtGalleryPresenter(repo, this)
+    }
 
     private val mArtAdapter: ArtWorksAdapter by lazy {
         ArtWorksAdapter {
@@ -39,14 +45,11 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
     override fun onResume() {
         super.onResume()
-        val networkInterceptor = NetworkConnectionInterceptor(WeakReference(context!!))
-        val repo =
-            GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
-
-        mPresenter = ArtGalleryPresenter(repo, this)
+        mPresenter.getArtList()
     }
 
     private fun initComponents() {
+        sv_arts.setOnSearchListener(ManageOnSearchListener(mPresenter))
         rv_arts.apply {
             adapter = mArtAdapter
             layoutManager = GridLayoutManager(context, 2)
@@ -71,7 +74,8 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
 
     companion object {
         const val TAG = "ArtGalleryFragment:TAG"
-        fun newInstance(): ArtGalleryFragment = ArtGalleryFragment()
+        fun newInstance(): ArtGalleryFragment =
+            ArtGalleryFragment()
     }
 
     override fun onDestroy() {
