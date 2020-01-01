@@ -32,28 +32,23 @@ class DetailArtActivity : AppCompatActivity(), DetailArtPresenter.View {
         detailPresenter.onCreate(this, intent.getParcelableExtra(PHOTO))
 
         btnPreview.setOnClickListener {
-            val value:Any? =intent.getParcelableExtra<ImageDetail>(PHOTO)
-            myStartActivity<CameraArtActivity>(bundleOf(
-                PHOTO to value ))
-
+            detailPresenter.previewPushed()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.detail_art_menu, menu);
+        inflater.inflate(R.menu.detail_art_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.menu_fav -> {
-                Toast.makeText(this, "Se pulsa fav", Toast.LENGTH_LONG).show()
+                detailPresenter.favMenuSelected()
                 true
             }
             else -> {
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 finish()
                 super.onOptionsItemSelected(item)
             }
@@ -81,6 +76,15 @@ class DetailArtActivity : AppCompatActivity(), DetailArtPresenter.View {
         }
         photoUser.loadUrl("${user?.profileImage?.small}")
         photoUserName.text=user?.name?:"N/A"
+    }
+
+    override fun launchPreview() {
+        val value:Any? =intent.getParcelableExtra<ImageDetail>(PHOTO)
+        myStartActivity<CameraArtActivity>(bundleOf(
+            PHOTO to value ))    }
+
+    override fun selectFav() {
+        Toast.makeText(this, "Se pulsa fav", Toast.LENGTH_LONG).show()
     }
 
 }
