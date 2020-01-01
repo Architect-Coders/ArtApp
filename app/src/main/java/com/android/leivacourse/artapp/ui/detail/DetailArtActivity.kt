@@ -15,12 +15,12 @@ import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.myStartActivity
 import kotlinx.android.synthetic.main.activity_detail_art.*
 
-class DetailArtActivity : AppCompatActivity(), DetailArtPresenter.View {
+class DetailArtActivity : AppCompatActivity(), DetailArtContract.View {
     companion object {
         const val PHOTO = "DetailArtActivity:photo"
     }
 
-    private val detailPresenter = DetailArtPresenter()
+    private val detailPresenter = DetailArtPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class DetailArtActivity : AppCompatActivity(), DetailArtPresenter.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        detailPresenter.onCreate(this, intent.getParcelableExtra(PHOTO))
+        detailPresenter.onCreate(intent.getParcelableExtra(PHOTO))
 
         btnPreview.setOnClickListener {
             detailPresenter.previewPushed()

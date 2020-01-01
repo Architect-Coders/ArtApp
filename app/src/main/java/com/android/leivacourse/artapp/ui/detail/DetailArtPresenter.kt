@@ -2,31 +2,19 @@ package com.android.leivacourse.artapp.ui.detail
 
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
 
-class DetailArtPresenter {
-    private var view: View? = null
+class DetailArtPresenter(
+    private val mDetailArtView: DetailArtContract.View
+) : DetailArtContract.Presenter {
 
-    interface View {
-        fun updateUI(art: ImageDetail)
-        fun launchPreview()
-        fun selectFav()
+    fun onCreate(art: ImageDetail?) {
+        art?.let { mDetailArtView.updateUI(it) }
     }
 
-    fun onCreate(view: View, art: ImageDetail?) {
-        this.view = view
-        if (art != null) {
-            view.updateUI(art)
-        }
+    override fun previewPushed(){
+        mDetailArtView.launchPreview()
     }
 
-    fun onDestroy() {
-        view = null
-    }
-
-    fun previewPushed(){
-        view?.launchPreview()
-    }
-
-    fun favMenuSelected(){
-        view?.selectFav()
+    override fun favMenuSelected(){
+        mDetailArtView.selectFav()
     }
 }
