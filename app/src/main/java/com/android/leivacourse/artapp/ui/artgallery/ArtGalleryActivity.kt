@@ -38,10 +38,7 @@ class ArtGalleryActivity : AppCompatActivity(),
         val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
         repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
 
-        viewModel = ViewModelProviders.of(
-            this,
-            ArtGalleryModelFactory(repo)
-        )[ArtGalleryViewModel::class.java]
+        viewModel = ViewModelProviders.of(this, ArtGalleryModelFactory(GetArts(repo),repo))[ArtGalleryViewModel::class.java]
         initComponents()
 
 
@@ -65,11 +62,11 @@ class ArtGalleryActivity : AppCompatActivity(),
     }
 
 
-    private fun getArtList(currentQuery: String?) {
+ /*   private fun getArtList(currentQuery: String?) {
     //   viewModel.getArtList(DEFAULT_QUERY, DEFAULT_SEARCH_PAGE, QUERY_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
     viewModel = ViewModelProviders.of(this, ArtGalleryModelFactory(repo))[ArtGalleryViewModel::
     class.java]
-}
+}*/
 
     private fun initComponents() {
 
@@ -102,6 +99,9 @@ class ArtGalleryActivity : AppCompatActivity(),
 */
     override fun onSearchAction(currentQuery: String?) {
      //   getArtList(currentQuery)
+     if (currentQuery != null)
+         viewModel.loadDataByTitle(currentQuery)
+      //  viewModel.loadArtDataByTitle(currentQuery)
     }
 
     override fun onSuggestionClicked(searchSuggestion: SearchSuggestion?) {

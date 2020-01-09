@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.data.*
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
 import com.android.leivacourse.artapp.utils.Output
@@ -12,15 +13,20 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
 class ArtGalleryViewModel(
+    private val getArts: GetArts,
     private val mObrasRepository: GalleryArtRepository) : ViewModel(){
+
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
         get() {
             if (_model.value == null)
-                    getArtList(DEFAULT_QUERY, DEFAULT_SEARCH_PAGE, QUERY_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
+                getDefaultArt()
             return _model
+
+
         }
 
     init {
@@ -29,24 +35,19 @@ class ArtGalleryViewModel(
     sealed class  UiModel {
         object Loading : UiModel()
         class Content(val artWork : List<ImageDetail>) : UiModel()
-
     }
 
-    private fun getArtList(query:String , page: Int, queryPage: Int, orderBy: String, orientation: String) {
+    fun getDefaultArt(){
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
                 _model.value = UiModel.Loading
-            }
-
-            val response = mObrasRepository.getArtPhotos(query, page, queryPage, orderBy, orientation)
-
-            withContext(Dispatchers.Main) {
-                when (response){
+                lateinit var response : Output<SearchResults>
+                    response = getArts.invoke()
+                when (response) {
                     is Output.Success -> {
-                  //      mArtGalleryView.populateArts(response.output.toImageDetail())
-                        _model.value = UiModel.Content(response.output.toImageDetail())
+                        _model.value = UiModel.Content((response.output).toImageDetail())
                     }
-                    is Output.Error ->{
+                    is Output.Error -> {
                         //mArtGalleryView.errorMessage(response.exception.message)
                     }
                 }
@@ -55,10 +56,56 @@ class ArtGalleryViewModel(
     }
 
 
+    fun loadDataByTitle(query: String) {
+        GlobalScope.launch {
+            withContext(Dispatchers.Main) {
+                _model.value = UiModel.Loading
+                lateinit var response : Output<SearchResults>
+                if (query != null)
+                     response = getArts.invokeSearch(query)
+                else
+                 response = getArts.invoke()
+                when (response) {
+                    is Output.Success -> {
+                        _model.value = UiModel.Content((response.output).toImageDetail())
+                    }
+                    is Output.Error -> {
+                        //mArtGalleryView.errorMessage(response.exception.message)
+                    }
+                }
+            }
+
+        }
+    }
+
+    class GetArts(private val mObrasRepository: GalleryArtRepository) {
+
+        suspend fun invoke(): Output<SearchResults> {
+            return mObrasRepository.getArtPhotos(
+                DEFAULT_QUERY,
+                DEFAULT_SEARCH_PAGE,
+                QUERY_PAGE,
+                DEFAULT_ORDER_BY,
+                DEFAULT_ORIENTATION
+            )
+        }
+
+        suspend fun invokeSearch(query: String): Output<SearchResults> {
+            return mObrasRepository.getArtPhotos(
+                query,
+                DEFAULT_SEARCH_PAGE,
+                QUERY_PAGE,
+                DEFAULT_ORDER_BY,
+                DEFAULT_ORIENTATION
+            )
+        }
+
+    }
+
     @Suppress("UNCHECKED_CAST")
-    class ArtGalleryModelFactory(var repo : GalleryArtRepository) : ViewModelProvider.Factory{
+    class ArtGalleryModelFactory(var getArts: GetArts, var repo : GalleryArtRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            ArtGalleryViewModel(repo) as T
+            ArtGalleryViewModel(getArts, repo) as T
 
 
     }
