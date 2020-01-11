@@ -3,7 +3,6 @@ package com.android.leivacourse.artapp.ui.artgallery
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.data.*
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
@@ -13,11 +12,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class ArtGalleryViewModel(
-    private val getArts: GetArts,
-    private val mObrasRepository: GalleryArtRepository) : ViewModel(){
-
+    private val getArts: GetArts
+) : ViewModel() {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -25,56 +22,49 @@ class ArtGalleryViewModel(
             if (_model.value == null)
                 getDefaultArt()
             return _model
-
-
         }
 
-    init {
+    init{
     }
 
-    sealed class  UiModel {
-        object Loading : UiModel()
-        class Content(val artWork : List<ImageDetail>) : UiModel()
-    }
-
-    fun getDefaultArt(){
-        GlobalScope.launch {
-            withContext(Dispatchers.Main) {
-                _model.value = UiModel.Loading
-                lateinit var response : Output<SearchResults>
-                    response = getArts.invoke()
-                when (response) {
-                    is Output.Success -> {
-                        _model.value = UiModel.Content((response.output).toImageDetail())
-                    }
-                    is Output.Error -> {
-                        //mArtGalleryView.errorMessage(response.exception.message)
-                    }
-                }
+    private fun setResponse(response: Output<SearchResults>) {
+        when (response) {
+            is Output.Success -> {
+                _model.value = UiModel.Content((response.output).toImageDetail())
+            }
+            is Output.Error -> {
+                //mArtGalleryView.errorMessage(response.exception.message)
             }
         }
     }
 
+    sealed class UiModel {
+        object Loading : UiModel()
+        class Content(val artWork: List<ImageDetail>) : UiModel()
+    }
+
+    fun getDefaultArt() {
+        GlobalScope.launch {
+            withContext(Dispatchers.Main) {
+                _model.value = UiModel.Loading
+                lateinit var response: Output<SearchResults>
+                response = getArts.invoke()
+                setResponse(response)
+            }
+        }
+    }
 
     fun loadDataByTitle(query: String) {
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
                 _model.value = UiModel.Loading
-                lateinit var response : Output<SearchResults>
+                lateinit var response: Output<SearchResults>
                 if (query != null)
-                     response = getArts.invokeSearch(query)
+                    response = getArts.invokeSearch(query)
                 else
-                 response = getArts.invoke()
-                when (response) {
-                    is Output.Success -> {
-                        _model.value = UiModel.Content((response.output).toImageDetail())
-                    }
-                    is Output.Error -> {
-                        //mArtGalleryView.errorMessage(response.exception.message)
-                    }
-                }
+                    response = getArts.invoke()
+                setResponse(response)
             }
-
         }
     }
 
@@ -99,14 +89,5 @@ class ArtGalleryViewModel(
                 DEFAULT_ORIENTATION
             )
         }
-
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class ArtGalleryModelFactory(var getArts: GetArts, var repo : GalleryArtRepository) : ViewModelProvider.Factory{
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            ArtGalleryViewModel(getArts, repo) as T
-
-
     }
 }

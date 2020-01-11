@@ -17,6 +17,7 @@ import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.*
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
 import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
 import com.android.leivacourse.artapp.utils.changeLoaderStatus
+import com.android.leivacourse.artapp.utils.getViewModel
 import com.android.leivacourse.artapp.utils.myStartActivity
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
@@ -38,7 +39,8 @@ class ArtGalleryActivity : AppCompatActivity(),
         val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
         repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
 
-        viewModel = ViewModelProviders.of(this, ArtGalleryModelFactory(GetArts(repo),repo))[ArtGalleryViewModel::class.java]
+        //viewModel = ViewModelProviders.of(this, ArtGalleryModelFactory(GetArts(repo),repo))[ArtGalleryViewModel::class.java]
+        viewModel = getViewModel { ArtGalleryViewModel(GetArts(repo)) }
         initComponents()
 
 
@@ -60,13 +62,6 @@ class ArtGalleryActivity : AppCompatActivity(),
         super.onResume()
         viewModel.model.observe(this, Observer(::updateUI))
     }
-
-
- /*   private fun getArtList(currentQuery: String?) {
-    //   viewModel.getArtList(DEFAULT_QUERY, DEFAULT_SEARCH_PAGE, QUERY_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
-    viewModel = ViewModelProviders.of(this, ArtGalleryModelFactory(repo))[ArtGalleryViewModel::
-    class.java]
-}*/
 
     private fun initComponents() {
 
@@ -98,10 +93,8 @@ class ArtGalleryActivity : AppCompatActivity(),
 
 */
     override fun onSearchAction(currentQuery: String?) {
-     //   getArtList(currentQuery)
      if (currentQuery != null)
          viewModel.loadDataByTitle(currentQuery)
-      //  viewModel.loadArtDataByTitle(currentQuery)
     }
 
     override fun onSuggestionClicked(searchSuggestion: SearchSuggestion?) {

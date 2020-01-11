@@ -207,8 +207,8 @@ formatting:
     active: true
     autoCorrect: true
   MultiLineIfElse:
-    active: true
-    autoCorrect: true
+    active: false
+    autoCorrect: false
   NoBlankLineBeforeRbrace:
     active: true
     autoCorrect: true
