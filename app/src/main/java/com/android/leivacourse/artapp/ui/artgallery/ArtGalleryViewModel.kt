@@ -1,16 +1,18 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.android.leivacourse.artapp.api.models.ResultsItem
 import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.data.*
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
-import com.android.leivacourse.artapp.utils.Output
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class ArtGalleryViewModel(
     private val getArts: GetArts
@@ -27,15 +29,8 @@ class ArtGalleryViewModel(
     init{
     }
 
-    private fun setResponse(response: Output<SearchResults>) {
-        when (response) {
-            is Output.Success -> {
-                _model.value = UiModel.Content((response.output).toImageDetail())
-            }
-            is Output.Error -> {
-                //mArtGalleryView.errorMessage(response.exception.message)
-            }
-        }
+    private fun setResponse(response: SearchResults) {
+        _model.value = UiModel.Content(response.toImageDetail())
     }
 
     sealed class UiModel {
@@ -47,9 +42,7 @@ class ArtGalleryViewModel(
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
                 _model.value = UiModel.Loading
-                lateinit var response: Output<SearchResults>
-                response = getArts.invoke()
-                setResponse(response)
+                handleResponse(getArts.invoke())
             }
         }
     }
@@ -58,19 +51,25 @@ class ArtGalleryViewModel(
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
                 _model.value = UiModel.Loading
-                lateinit var response: Output<SearchResults>
-                if (query != null)
-                    response = getArts.invokeSearch(query)
-                else
-                    response = getArts.invoke()
-                setResponse(response)
+                handleResponse(getArts.invokeSearch(query))
             }
+        }
+    }
+
+    private fun handleResponse(response: ResultWrapper<Response<SearchResults>>) {
+        when (response) {
+            is ResultWrapper.Success -> {
+                response.value.body()?.let { it }?.let { searchResults -> setResponse(searchResults) }
+                response.value.errorBody()?.let { setResponse(SearchResults(0,0, listOf<ResultsItem>())) }
+            }
+            is ResultWrapper.GenericError -> setResponse(response.error?.errors as SearchResults)
+            is ResultWrapper.NetworkError -> setResponse(SearchResults(0,0, listOf<ResultsItem>()))
         }
     }
 
     class GetArts(private val mObrasRepository: GalleryArtRepository) {
 
-        suspend fun invoke(): Output<SearchResults> {
+        suspend fun invoke(): ResultWrapper<Response<SearchResults>> {
             return mObrasRepository.getArtPhotos(
                 DEFAULT_QUERY,
                 DEFAULT_SEARCH_PAGE,
@@ -80,7 +79,7 @@ class ArtGalleryViewModel(
             )
         }
 
-        suspend fun invokeSearch(query: String): Output<SearchResults> {
+        suspend fun invokeSearch(query: String): ResultWrapper<Response<SearchResults>> {
             return mObrasRepository.getArtPhotos(
                 query,
                 DEFAULT_SEARCH_PAGE,

@@ -2,18 +2,16 @@ package com.android.leivacourse.artapp.ui.artgallery
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
-import com.android.leivacourse.artapp.*
+import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.api.Retrofit
-import com.android.leivacourse.artapp.data.*
-import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.*
+import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.GetArts
+import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.UiModel
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
 import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
 import com.android.leivacourse.artapp.utils.changeLoaderStatus
@@ -38,12 +36,8 @@ class ArtGalleryActivity : AppCompatActivity(),
 
         val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
         repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
-
-        //viewModel = ViewModelProviders.of(this, ArtGalleryModelFactory(GetArts(repo),repo))[ArtGalleryViewModel::class.java]
         viewModel = getViewModel { ArtGalleryViewModel(GetArts(repo)) }
         initComponents()
-
-
     }
 
     fun updateUI(model: UiModel) {
@@ -54,7 +48,13 @@ class ArtGalleryActivity : AppCompatActivity(),
         )
 
         when (model) {
-            is UiModel.Content -> mArtAdapter.items = model.artWork
+            is UiModel.Content -> {
+                mArtAdapter.items = model.artWork
+                if ( model.artWork.isNotEmpty())
+                    mArtAdapter.items = model.artWork
+                else
+                    errorMessage(getString(R.string.no_results))
+            }
         }
     }
 
@@ -79,21 +79,14 @@ class ArtGalleryActivity : AppCompatActivity(),
         sv_arts.setOnSearchListener(this)
     }
 
- /*   override fun populateArts(items: List<ImageDetail>) =
-        if (items.isNotEmpty()) mArtAdapter.items =
-            items else errorMessage(getString(R.string.no_results))
-
-
-    override fun errorMessage(message: String?) {
+     fun errorMessage(message: String?) {
         message?.let {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         }
     }
 
-
-*/
-    override fun onSearchAction(currentQuery: String?) {
-     if (currentQuery != null)
+    override fun onSearchAction(currentQuery: String) {
+     if (currentQuery.isNotEmpty())
          viewModel.loadDataByTitle(currentQuery)
     }
 
