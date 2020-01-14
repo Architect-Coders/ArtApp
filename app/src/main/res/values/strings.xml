@@ -15,7 +15,5 @@
     <string name="action_arts">INICIO</string>
     <string name="action_fav">FAVORITOS</string>
     <string name="action_profile">PERFIL</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_results">La busqueda no arrojo resultados</string>
 </resources>

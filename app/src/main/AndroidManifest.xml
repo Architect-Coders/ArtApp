@@ -13,10 +13,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".CameraArtActivity"
+        <activity android:name=".ui.camera.CameraArtActivity"
                 android:theme="@style/AppThemeBar">
         </activity>
-        <activity android:name=".DetailArtActivity"
+        <activity android:name="com.android.leivacourse.artapp.ui.detail.DetailArtActivity"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".ui.artgallery.ArtGalleryActivity">
