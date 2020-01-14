@@ -93,4 +93,5 @@ dependencies {
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
     //Lottie
     implementation 'com.airbnb.android:lottie:3.0.7'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 }
