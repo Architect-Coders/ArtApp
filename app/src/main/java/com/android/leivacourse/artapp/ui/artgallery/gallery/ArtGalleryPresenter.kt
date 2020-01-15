@@ -1,9 +1,9 @@
 package com.android.leivacourse.artapp.ui.artgallery.gallery
 
-import com.android.leivacourse.artapp.GalleryArtRepository
 import com.android.leivacourse.artapp.data.DEFAULT_ORDER_BY
 import com.android.leivacourse.artapp.data.DEFAULT_ORIENTATION
 import com.android.leivacourse.artapp.data.DEFAULT_QUERY
+import com.android.leivacourse.artapp.ui.artgallery.GalleryArtRepository
 import com.android.leivacourse.artapp.ui.artgallery.toImageDetail
 import com.android.leivacourse.artapp.utils.Output
 import kotlinx.coroutines.Dispatchers

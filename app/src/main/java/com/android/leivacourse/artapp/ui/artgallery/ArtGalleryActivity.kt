@@ -6,40 +6,32 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
-import com.android.leivacourse.artapp.*
-import com.android.leivacourse.artapp.api.Retrofit
-import com.android.leivacourse.artapp.data.DEFAULT_ORDER_BY
-import com.android.leivacourse.artapp.data.DEFAULT_ORIENTATION
-import com.android.leivacourse.artapp.data.DEFAULT_QUERY
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
-import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
-import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.ref.WeakReference
-import androidx.fragment.app.Fragment
 import com.android.leivacourse.artapp.R
-import com.android.leivacourse.artapp.ui.artgallery.fav.FavoriteFragment
-import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtGalleryFragment
-import com.android.leivacourse.artapp.ui.artgallery.profile.ProfileFragment
-import com.android.leivacourse.artapp.utils.replaceFragmentInActivity
+import com.android.leivacourse.artapp.api.Retrofit
 import com.android.leivacourse.artapp.data.*
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.ui.artgallery.fav.FavoriteFragment
+import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtGalleryContract
+import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtGalleryFragment
+import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtWorksAdapter
+import com.android.leivacourse.artapp.ui.artgallery.profile.ProfileFragment
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
 import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
 import com.android.leivacourse.artapp.utils.changeLoaderStatus
 import com.android.leivacourse.artapp.utils.myStartActivity
+import com.android.leivacourse.artapp.utils.replaceFragmentInActivity
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_lista_obras.*
+import java.lang.ref.WeakReference
 
 
-class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
-    FloatingSearchView.OnSearchListener {
+class ArtGalleryActivity : AppCompatActivity(){
 
-    private lateinit var mPresenter: ArtGalleryPresenter
-    private lateinit var mArtAdapter: ArtWorksAdapter
-
-    private lateinit var lottieAnimation: LottieAnimationView
     private var fragment: Fragment? = null
     private var tag: String? = null
 
@@ -47,69 +39,10 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
-        val repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
-        mPresenter = ArtGalleryPresenter(repo,this)
-
-        initComponents()
         replaceFragmentInActivity(
             ArtGalleryFragment.newInstance(), R.id.container_fragments,
             ArtGalleryFragment.TAG)
-
-        getArtList(DEFAULT_QUERY)
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mPresenter.initLoader()
-      //  mPresenter.getArtList(DEFAULT_QUERY,1,15, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
-    }
-
-    private fun getArtList(currentQuery: String?) =
-        if (currentQuery != null)
-            mPresenter.getArtList(currentQuery, DEFAULT_SEARCH_PAGE, QUERY_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
-        else
-            mPresenter.getArtList(DEFAULT_QUERY, DEFAULT_SEARCH_PAGE, QUERY_PAGE, DEFAULT_ORDER_BY, DEFAULT_ORIENTATION)
-
-    private fun initComponents() {
-
-        lottieAnimation = findViewById(R.id.loader_view)
-
-        mArtAdapter = ArtWorksAdapter {
-            myStartActivity<DetailArtActivity>(bundleOf(DetailArtActivity.PHOTO to it))
-        }
-
-        rv_arts.apply{
-            adapter = mArtAdapter
-            layoutManager = GridLayoutManager(context,2)
-        }
-
-        sv_arts.setOnSearchListener(this)
-    }
-
-    override fun populateArts(items: List<ImageDetail>) =
-        if (items.isNotEmpty()) mArtAdapter.items =
-            items else errorMessage(getString(R.string.no_results))
-
-
-    override fun showLoader() {
-        changeLoaderStatus(lottieAnimation, VISIBLE)
-    }
-
-    override fun hideLoader() {
-        changeLoaderStatus(lottieAnimation, GONE)
-
-    }
-
-    override fun errorMessage(message: String?) {
-        message?.let {
-            Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun setPresenter(presenter: Any?) {
-
+        setupNavigation()
     }
 
 
@@ -139,12 +72,5 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
         //it will be onDetach for the presenter
     }
 
-    override fun onSearchAction(currentQuery: String?) {
-        getArtList(currentQuery)
-    }
-
-    override fun onSuggestionClicked(searchSuggestion: SearchSuggestion?) {
-        // do nothing
-    }
 
 }
