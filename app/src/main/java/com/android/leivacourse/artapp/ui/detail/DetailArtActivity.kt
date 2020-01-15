@@ -4,23 +4,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.core.text.bold
-import androidx.core.text.buildSpannedString
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.android.leivacourse.artapp.ui.camera.CameraArtActivity
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.ui.detail.DetailArtViewModel.UiModel
 import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.myStartActivity
 import kotlinx.android.synthetic.main.activity_detail_art.*
+import java.lang.IllegalStateException
 
-class DetailArtActivity : AppCompatActivity(), DetailArtContract.View {
+class DetailArtActivity : AppCompatActivity(){
     companion object {
         const val PHOTO = "DetailArtActivity:photo"
     }
 
-    private val detailPresenter = DetailArtPresenter(this)
+    private lateinit var viewModel: DetailArtViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +30,23 @@ class DetailArtActivity : AppCompatActivity(), DetailArtContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        detailPresenter.onCreate(intent.getParcelableExtra(PHOTO))
+        val art: ImageDetail = intent.getParcelableExtra(PHOTO)
+            ?: throw (IllegalStateException("Art not found"))
+
+        viewModel = ViewModelProviders.of(
+            this,
+            DetailArtViewModelFactory(art)
+        )[DetailArtViewModel::class.java]
+            viewModel.model.observe(this, Observer(::updateUI))
+
+        viewModel.navigation.observe(this, Observer { event ->
+            event.getContentIfNotHandled()?.let {
+                myStartActivity<CameraArtActivity>(bundleOf(PHOTO to art ))
+            }
+        })
 
         btnPreview.setOnClickListener {
-            detailPresenter.previewPushed()
+            viewModel.onPreviewPushed(art)
         }
     }
 
@@ -45,7 +59,8 @@ class DetailArtActivity : AppCompatActivity(), DetailArtContract.View {
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.menu_fav -> {
-                detailPresenter.favMenuSelected()
+                viewModel.favMenuSelected()
+
                 true
             }
             else -> {
@@ -54,37 +69,12 @@ class DetailArtActivity : AppCompatActivity(), DetailArtContract.View {
             }
         }
 
-    override fun updateUI(art: ImageDetail) = with(art){
-        photoDetailToolbar.title = title
-        photoDetailImage.loadUrl("${urls?.regular}")
-        photoSummary.text = buildSpannedString {
-
-            bold { append("Descripción: ") }
-            appendln(description?:"N/A")
-
-            bold { append("Autor: ") }
-            appendln(user?.firstName?:"N/A")
-
-            bold { append("Localización: ") }
-            appendln(user?.location?:"N/A")
-
-            val mPrice= String.format("%.2f",getRamdomPrice)
-
-            bold { append("Precio: ") }
-            appendln("$mPrice MXN")
-
+    private fun updateUI(model: UiModel) = with (model.art){
+            photoDetailToolbar.title = title
+            photoDetailImage.loadUrl("${urls?.regular}")
+            photoSummary.setArt(model.art)
+            photoUser.loadUrl("${user?.profileImage?.small}")
+            photoUserName.text=user?.name?:"N/A"
         }
-        photoUser.loadUrl("${user?.profileImage?.small}")
-        photoUserName.text=user?.name?:"N/A"
+
     }
-
-    override fun launchPreview() {
-        val value:Any? =intent.getParcelableExtra<ImageDetail>(PHOTO)
-        myStartActivity<CameraArtActivity>(bundleOf(
-            PHOTO to value ))    }
-
-    override fun selectFav() {
-        Toast.makeText(this, "Se pulsa fav", Toast.LENGTH_LONG).show()
-    }
-
-}

@@ -51,7 +51,7 @@
                 android:padding="16dp"
                 android:transitionGroup="true">
 
-            <TextView
+            <com.android.leivacourse.artapp.ui.detail.DetailArtInfoView
                     android:id="@+id/photoSummary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
