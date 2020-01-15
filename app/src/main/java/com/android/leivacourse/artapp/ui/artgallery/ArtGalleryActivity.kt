@@ -1,6 +1,7 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -8,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
-import com.android.leivacourse.artapp.*
+import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.api.Retrofit
 import com.android.leivacourse.artapp.data.*
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
 class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
-    FloatingSearchView.OnSearchListener {
+    FloatingSearchView.OnSearchListener, View.OnClickListener {
 
     private lateinit var mPresenter: ArtGalleryPresenter
     private lateinit var mArtAdapter: ArtWorksAdapter
@@ -66,6 +67,9 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
             layoutManager = GridLayoutManager(context, 2)
         }
         sv_arts.setOnSearchListener(this)
+        chip_art_all.setOnClickListener(this)
+        chip_art_pictures.setOnClickListener(this)
+        chip_art_sculptures.setOnClickListener(this)
     }
 
     override fun populateArts(items: List<ImageDetail>) =
@@ -99,5 +103,15 @@ class ArtGalleryActivity : AppCompatActivity(), ArtGalleryContract.View,
 
     override fun onSuggestionClicked(searchSuggestion: SearchSuggestion?) {
         // do nothing
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.chip_art_all -> getArtList(null)
+            R.id.chip_art_pictures -> getArtList(getString(R.string.chip_pictures))
+            R.id.chip_art_sculptures -> getArtList(getString(R.string.chip_sculptures))
+            else -> {
+            }
+        }
     }
 }
