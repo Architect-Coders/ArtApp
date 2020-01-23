@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_camera_art.*
 import java.io.File
 import java.lang.IllegalStateException
 
-
 class CameraArtActivity : AppCompatActivity() {
     private var screenshotManager: ScreenshotManager? = null
     private var subscription: ScreenshotResult.Subscription? = null
@@ -34,8 +33,6 @@ class CameraArtActivity : AppCompatActivity() {
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
     private var contenData: View? = null
-
-
     private lateinit var viewModel: CameraArtViewModel
 
     @SuppressLint("SetTextI18n")
@@ -50,7 +47,6 @@ class CameraArtActivity : AppCompatActivity() {
 
         contenData = findViewById(R.id.contentData)
 
-
         initCamera()
         val art: ImageDetail = intent.getParcelableExtra(PHOTO)
             ?: throw (IllegalStateException("Art not found"))
@@ -62,9 +58,7 @@ class CameraArtActivity : AppCompatActivity() {
 
         viewModel.model.observe(this, Observer(::onUpdateUI))
 
-
     }
-
 
     fun initCamera() {
         if (allPermissionsGranted()) {
@@ -203,7 +197,5 @@ class CameraArtActivity : AppCompatActivity() {
         super.onDestroy()
 
     }
-
-
 }
 
