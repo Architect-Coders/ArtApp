@@ -3,6 +3,7 @@ package com.android.leivacourse.artapp.utils
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.Nullable
@@ -29,7 +30,6 @@ inline fun <reified T: AppCompatActivity> AppCompatActivity.myStartActivity(@Nul
 fun AppCompatActivity.changeLoaderStatus(lottieAnimationView: LottieAnimationView, status: Int) {
     lottieAnimationView.visibility = status
 }
-
 
 fun Context.toast(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

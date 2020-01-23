@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
 
-        <TextView
+        <com.android.leivacourse.artapp.ui.camera.CameraArtInfoView
                 android:id="@+id/photoDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

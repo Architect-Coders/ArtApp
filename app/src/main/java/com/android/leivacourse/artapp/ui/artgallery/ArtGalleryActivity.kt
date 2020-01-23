@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.api.Retrofit
+import com.android.leivacourse.artapp.data.COL_NUM
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.GetArts
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.UiModel
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
@@ -29,6 +30,7 @@ class ArtGalleryActivity : AppCompatActivity(),
     private lateinit var mArtAdapter: ArtWorksAdapter
     private lateinit var lottieAnimation: LottieAnimationView
     private lateinit var repo: GalleryArtRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +76,7 @@ class ArtGalleryActivity : AppCompatActivity(),
 
         rv_arts.apply {
             adapter = mArtAdapter
-            layoutManager = GridLayoutManager(context, 2)
+            layoutManager = GridLayoutManager(context, COL_NUM)
         }
         sv_arts.setOnSearchListener(this)
     }

@@ -14,8 +14,8 @@ import androidx.camera.core.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.text.bold
-import androidx.core.text.buildSpannedString
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity.Companion.PHOTO
 import com.android.leivacourse.artapp.data.local.model.ImageDetail
@@ -24,17 +24,19 @@ import com.android.leivacourse.artapp.utils.toast
 import eu.bolt.screenshotty.*
 import kotlinx.android.synthetic.main.activity_camera_art.*
 import java.io.File
+import java.lang.IllegalStateException
 
 
-
-class CameraArtActivity : AppCompatActivity(),CameraArtContract.View {
-    private var screenshotManager: ScreenshotManager?=null
-    private var subscription:ScreenshotResult.Subscription?=null
+class CameraArtActivity : AppCompatActivity() {
+    private var screenshotManager: ScreenshotManager? = null
+    private var subscription: ScreenshotResult.Subscription? = null
     private val REQUEST_CODE_PERMISSIONS = 999
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
-    private var contenData:View?=null
-    private val presenter=CameraArtPresenter()
+    private var contenData: View? = null
+
+
+    private lateinit var viewModel: CameraArtViewModel
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,58 +46,56 @@ class CameraArtActivity : AppCompatActivity(),CameraArtContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title=""
+        supportActionBar?.title = ""
 
-        contenData=findViewById(R.id.contentData)
+        contenData = findViewById(R.id.contentData)
 
-        presenter.onCreate(this,intent.getParcelableExtra(PHOTO))
+
+        initCamera()
+        val art: ImageDetail = intent.getParcelableExtra(PHOTO)
+            ?: throw (IllegalStateException("Art not found"))
+
+        viewModel = ViewModelProviders.of(
+            this,
+            CameraArtViewModelFactory(art)
+        )[CameraArtViewModel::class.java]
+
+        viewModel.model.observe(this, Observer(::onUpdateUI))
+
 
     }
 
-    override fun initCamera() {
+
+    fun initCamera() {
         if (allPermissionsGranted()) {
             textureView.post {
-                presenter.startCameraForCapture(textureView)
+                onCameraBindLivecycle(CameraXUtils.startCameraForCapture(textureView))
             }
         } else {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
         // Every time the provided texture view changes, recompute layout
-        textureView.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> presenter.updateTransform(textureView)
+        textureView.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            CameraXUtils.updateTransform(textureView)
         }
     }
 
-    override fun cameraBindLivecycle(preview: Preview) {
-        CameraX.bindToLifecycle(this,preview)
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun updateUI(photo: ImageDetail)= with(photo) {
-
-        this.let {
-            photoImagen.loadUrl("${urls?.regular}")
-            photoDetail.text = buildSpannedString {
-
-                bold { append("Descripción: ") }
-                appendln(description?:"N/A")
-
-                bold { append("Autor: ") }
-                appendln(user?.name?:"N/A")
-
-                bold { append("Localización: ") }
-                appendln(user?.location?:"N/A")
-            }
-            val mPrice= String.format("%.2f",getRamdomPrice)
-            btnPrice.setText("$ $mPrice MXN")
-
-        }
-
+    fun onCameraBindLivecycle(preview: Preview) {
+        CameraX.bindToLifecycle(this, preview)
     }
 
 
-    override fun shareImage(imagePath:File) {
-        val uri= FileProvider.getUriForFile(this, this.packageName + ".fileprovider", imagePath)
-        contenData?.visibility=View.VISIBLE
+    fun onUpdateUI(model: CameraArtViewModel.UiModel) = with(model.art) {
+        photoImagen.loadUrl("${urls?.regular}")
+        photoDetail.setDetail(model.art)
+        val mPrice = String.format("%.2f", getRamdomPrice)
+        btnPrice.setText("$ $mPrice MXN")
+    }
+
+
+    fun onOpenChooserToShare(imagePath: File) {
+        val uri = FileProvider.getUriForFile(this, this.packageName + ".fileprovider", imagePath)
+        contenData?.visibility = View.VISIBLE
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
@@ -115,7 +115,7 @@ class CameraArtActivity : AppCompatActivity(),CameraArtContract.View {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 textureView.post {
-                    presenter.startCameraForCapture(textureView)
+                    onCameraBindLivecycle(CameraXUtils.startCameraForCapture(textureView))
                 }
             } else {
                 toast("Permissions not granted by the user.")
@@ -178,7 +178,7 @@ class CameraArtActivity : AppCompatActivity(),CameraArtContract.View {
                 processScreenShot(it)
             },
             onError = {
-                findViewById<View>(R.id.contentData).visibility = View.VISIBLE
+                contenData?.visibility = View.VISIBLE
                 toast("Error al realizar captura de pantalla.")
             }
         )
@@ -188,7 +188,8 @@ class CameraArtActivity : AppCompatActivity(),CameraArtContract.View {
         val bitmap = when (screenshot) {
             is ScreenshotBitmap -> screenshot.bitmap
         }
-        presenter.saveBitmap(this,bitmap)
+
+        onOpenChooserToShare(CameraXUtils.saveBitmap(this, bitmap))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -199,13 +200,9 @@ class CameraArtActivity : AppCompatActivity(),CameraArtContract.View {
 
     override fun onDestroy() {
         subscription?.dispose()
-        presenter.onDestroy()
         super.onDestroy()
 
     }
-
-
-
 
 
 }
