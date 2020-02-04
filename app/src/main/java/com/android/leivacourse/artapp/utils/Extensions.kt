@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 
@@ -22,8 +23,24 @@ inline fun <reified T: AppCompatActivity> AppCompatActivity.myStartActivity(@Nul
     startActivity(intent)
 }
 
+inline fun <reified T: AppCompatActivity> Fragment.myStartActivity(@Nullable bundle: Bundle? =null) {
+    val intent = Intent(context, T::class.java)
+    bundle?.let {
+        intent.putExtras(bundle)
+    }
+    startActivity(intent)
+}
+
 fun AppCompatActivity.changeLoaderStatus(lottieAnimationView: LottieAnimationView, status: Int) {
     lottieAnimationView.visibility = status
+}
+
+fun Fragment.changeLoaderStatus(lottieAnimationView: LottieAnimationView, status: Int) {
+    lottieAnimationView.visibility = status
+}
+
+inline fun <reified T : Fragment> getInstance() : T{
+    return T::class.java as T
 }
 
 fun Context.toast(message: CharSequence) =

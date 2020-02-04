@@ -27,10 +27,16 @@ import androidx.fragment.app.FragmentTransaction
  * The `fragment` is added to the container view with id `frameId`. The operation is
  * performed by the `fragmentManager`.
  */
-fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment, @IdRes frameId: Int) {
-    supportFragmentManager.transact {
-        replace(frameId, fragment)
+fun AppCompatActivity.replaceFragmentInActivity(fragment: Fragment?, @IdRes frameId: Int,tag: String?) {
+    val findFragment = supportFragmentManager.findFragmentByTag(tag)
+    if (findFragment== null){
+        fragment?.let {
+            supportFragmentManager.transact {
+                replace(frameId, fragment,tag)
+            }
+        }
     }
+
 }
 
 /**
