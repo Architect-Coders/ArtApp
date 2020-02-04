@@ -25,7 +25,7 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import kotlinx.android.synthetic.main.fragment_lista_obras.*
 import java.lang.ref.WeakReference
 
-class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
+class ArtGalleryFragment : Fragment(), ArtGalleryContract.View, View.OnClickListener {
 
     private lateinit var lottieAnimation: LottieAnimationView
 
@@ -61,12 +61,11 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
         mPresenter.getArtList()
     }
 
-  /*  private fun getArtList(currentQuery: String?) {
+    private fun getArtList(currentQuery: String?) {
         if (currentQuery != null)
            mPresenter.setQuery(currentQuery)
-        else
-            mPresenter.getArtList()
-    }*/
+        mPresenter.getArtList()
+    }
 
 
     private fun initComponents() {
@@ -76,6 +75,9 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
             adapter = mArtAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
+        chip_art_all.setOnClickListener(this)
+        chip_art_pictures.setOnClickListener(this)
+        chip_art_sculptures.setOnClickListener(this)
     }
 
     override fun populateArts(items: List<ImageDetail>) {
@@ -108,4 +110,13 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
         super.onDestroy()
     }
 
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.chip_art_all -> getArtList(null)
+            R.id.chip_art_pictures -> getArtList(getString(R.string.chip_pictures))
+            R.id.chip_art_sculptures -> getArtList(getString(R.string.chip_sculptures))
+            else -> {
+            }
+        }
+    }
 }
