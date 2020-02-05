@@ -1,45 +1,47 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
-import com.android.leivacourse.artapp.api.models.NoInternetException
 import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.api.service.UnsplashWs
-import com.android.leivacourse.artapp.utils.Output
-import com.google.gson.JsonParseException
+import retrofit2.HttpException
+import retrofit2.Response
+import java.io.IOException
 
 
 class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) :
     GalleryArtRepository {
 
-    override suspend fun getArtPhotos(query: String,page: Int, queryPage: Int,orderBy: String, orientation: String): Output<SearchResults> {
+    override suspend fun getArtPhotos(query: String,page: Int, queryPage: Int,orderBy: String, orientation: String): ResultWrapper<Response<SearchResults>> {
         return try {
-            val response = unsplashWs.getArtPhotos(query,page,queryPage,orientation)
-            return Output.Success(response.body()!!)
-
-        } catch (ex: NoInternetException) {
-            ex.printStackTrace()
-            Output.Error(ex)
-        } catch (ex: JsonParseException) {
-            ex.printStackTrace()
-            Output.Error(ex)
-        } catch (ex: Exception){
-            ex.printStackTrace()
-            Output.Error(ex)
+            ResultWrapper.Success(unsplashWs.getArtPhotos(query, page, queryPage, orientation))
+        } catch (throwable: Throwable) {
+            when (throwable) {
+                is IOException -> ResultWrapper.NetworkError
+                is HttpException -> {
+                    val code = throwable.code()
+                    val errorResponse = convertErrorBody(throwable)
+                    ResultWrapper.GenericError(code, errorResponse)
+                }
+                else -> {
+                    ResultWrapper.GenericError(null, null)
+                }
+            }
         }
     }
+
+    private fun convertErrorBody(throwable: HttpException): ErrorResponse? {
+        return try {
+            throwable.response()?.errorBody()?.source()?.let {
+              ErrorResponse(listOf(it.toString()))
+            }
+        } catch (exception: Exception) {
+            null
+        }
+    }
+
 
     companion object {
 
         private var INSTANCE: GalleryArtRepositoryImpl? = null
-
-        /**
-         * Returns the single instance of this class, creating it if necessary.
-
-         * @param tasksRemoteDataSource the backend data source
-         * *
-         * @param tasksLocalDataSource  the device storage data source
-         * *
-         * @return the [TasksRepository] instance
-         */
         fun getInstance(unsplashWs: UnsplashWs): GalleryArtRepository {
             return INSTANCE
                 ?: GalleryArtRepositoryImpl(
@@ -48,10 +50,6 @@ class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) :
                 .apply { INSTANCE = this }
         }
 
-        /**
-         * Used to force [getInstance] to create a new instance
-         * next time it's called.
-         */
         fun destroyInstance() {
             INSTANCE = null
         }

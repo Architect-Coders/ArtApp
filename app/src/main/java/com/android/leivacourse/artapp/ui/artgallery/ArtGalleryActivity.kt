@@ -1,75 +1,97 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.api.Retrofit
-import com.android.leivacourse.artapp.data.*
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
-import com.android.leivacourse.artapp.ui.artgallery.fav.FavoriteFragment
-import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtGalleryContract
-import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtGalleryFragment
-import com.android.leivacourse.artapp.ui.artgallery.gallery.ArtWorksAdapter
-import com.android.leivacourse.artapp.ui.artgallery.profile.ProfileFragment
+import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.GetArts
+import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.UiModel
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
 import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
 import com.android.leivacourse.artapp.utils.changeLoaderStatus
+import com.android.leivacourse.artapp.utils.getViewModel
 import com.android.leivacourse.artapp.utils.myStartActivity
-import com.android.leivacourse.artapp.utils.replaceFragmentInActivity
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_lista_obras.*
 import java.lang.ref.WeakReference
 
+class ArtGalleryActivity : AppCompatActivity(),
+    FloatingSearchView.OnSearchListener {
 
-class ArtGalleryActivity : AppCompatActivity(){
-
-    private var fragment: Fragment? = null
-    private var tag: String? = null
+    private lateinit var viewModel: ArtGalleryViewModel
+    private lateinit var mArtAdapter: ArtWorksAdapter
+    private lateinit var lottieAnimation: LottieAnimationView
+    private lateinit var repo: GalleryArtRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        replaceFragmentInActivity(
-            ArtGalleryFragment.newInstance(), R.id.container_fragments,
-            ArtGalleryFragment.TAG)
-        setupNavigation()
+        val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
+        repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
+        viewModel = getViewModel { ArtGalleryViewModel(GetArts(repo)) }
+        initComponents()
     }
 
+    fun updateUI(model: UiModel) {
 
-    private fun setupNavigation() {
-        nav_bottom.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.action_arts -> {
-                    fragment = ArtGalleryFragment.newInstance()
-                    tag = ArtGalleryFragment.TAG
-                }
-                R.id.action_buy -> {
-                    fragment = FavoriteFragment.newInstance()
-                    tag = FavoriteFragment.TAG
-                }
-                R.id.action_profile -> {
-                    fragment = ProfileFragment.newInstance()
-                    tag = ProfileFragment.TAG
-                }
+        changeLoaderStatus(
+            lottieAnimation,
+            if (model is UiModel.Loading) View.VISIBLE else View.GONE
+        )
+
+        when (model) {
+            is UiModel.Content -> {
+                mArtAdapter.items = model.artWork
+                if ( model.artWork.isNotEmpty())
+                    mArtAdapter.items = model.artWork
+                else
+                    errorMessage(getString(R.string.no_results))
             }
-            replaceFragmentInActivity(fragment, R.id.container_fragments,tag)
-            true
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        //it will be onDetach for the presenter
+    override fun onResume() {
+        super.onResume()
+        viewModel.model.observe(this, Observer(::updateUI))
+    }
+
+    private fun initComponents() {
+
+        lottieAnimation = findViewById(R.id.loader_view)
+
+        mArtAdapter = ArtWorksAdapter {
+            myStartActivity<DetailArtActivity>(bundleOf(
+                DetailArtActivity.PHOTO to it))
+        }
+
+        rv_arts.apply {
+            adapter = mArtAdapter
+            layoutManager = GridLayoutManager(context, 2)
+        }
+        sv_arts.setOnSearchListener(this)
+    }
+
+     fun errorMessage(message: String?) {
+        message?.let {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onSearchAction(currentQuery: String) {
+     if (currentQuery.isNotEmpty())
+         viewModel.loadDataByTitle(currentQuery)
+    }
+
+    override fun onSuggestionClicked(searchSuggestion: SearchSuggestion?) {
+        // do nothing
     }
 
 

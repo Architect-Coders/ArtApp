@@ -1,7 +1,7 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
 import com.android.leivacourse.artapp.api.models.SearchResults
-import com.android.leivacourse.artapp.utils.Output
+import retrofit2.Response
 
 interface GalleryArtRepository {
     suspend fun getArtPhotos(
@@ -10,5 +10,5 @@ interface GalleryArtRepository {
         queryPage: Int,
         orderBy: String,
         orientation: String
-    ): Output<SearchResults>
+    ): ResultWrapper<Response<SearchResults>>
 }
