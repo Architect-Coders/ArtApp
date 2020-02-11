@@ -23,6 +23,9 @@ import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.toast
 import eu.bolt.screenshotty.*
 import kotlinx.android.synthetic.main.activity_camera_art.*
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.io.File
 import java.lang.IllegalStateException
 
@@ -33,12 +36,19 @@ class CameraArtActivity : AppCompatActivity() {
     private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
 
     private var contenData: View? = null
-    private lateinit var viewModel: CameraArtViewModel
+
+    private lateinit var art: ImageDetail
+    private val viewModel: CameraArtViewModel by currentScope.viewModel(this) {
+        parametersOf(art)
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_art)
+
+        art = intent.getParcelableExtra(PHOTO)
+            ?: throw (IllegalStateException("Art not found"))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setHomeButtonEnabled(true)
@@ -48,13 +58,7 @@ class CameraArtActivity : AppCompatActivity() {
         contenData = findViewById(R.id.contentData)
 
         initCamera()
-        val art: ImageDetail = intent.getParcelableExtra(PHOTO)
-            ?: throw (IllegalStateException("Art not found"))
 
-        viewModel = ViewModelProviders.of(
-            this,
-            CameraArtViewModelFactory(art)
-        )[CameraArtViewModel::class.java]
 
         viewModel.model.observe(this, Observer(::onUpdateUI))
 

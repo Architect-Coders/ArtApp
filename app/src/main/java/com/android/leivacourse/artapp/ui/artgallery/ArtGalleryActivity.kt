@@ -16,29 +16,29 @@ import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.UiModel
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
 import com.android.leivacourse.artapp.utils.NetworkConnectionInterceptor
 import com.android.leivacourse.artapp.utils.changeLoaderStatus
-import com.android.leivacourse.artapp.utils.getViewModel
 import com.android.leivacourse.artapp.utils.myStartActivity
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.lang.ref.WeakReference
 
 class ArtGalleryActivity : AppCompatActivity(),
     FloatingSearchView.OnSearchListener {
 
-    private lateinit var viewModel: ArtGalleryViewModel
     private lateinit var mArtAdapter: ArtWorksAdapter
     private lateinit var lottieAnimation: LottieAnimationView
-    private lateinit var repo: GalleryArtRepository
 
+    private val viewModel: ArtGalleryViewModel by currentScope.viewModel(this) {
+        parametersOf(GetArts(GalleryArtRepositoryImpl.getInstance(
+            Retrofit.getUnsplashService(NetworkConnectionInterceptor(WeakReference(this))))))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val networkInterceptor = NetworkConnectionInterceptor(WeakReference(this))
-        repo = GalleryArtRepositoryImpl.getInstance(Retrofit.getUnsplashService(networkInterceptor))
-        viewModel = getViewModel { ArtGalleryViewModel(GetArts(repo)) }
         initComponents()
     }
 

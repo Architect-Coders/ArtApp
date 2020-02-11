@@ -30,9 +30,3 @@ class DetailArtViewModel(private val art: ImageDetail): ViewModel(){
     }
 
 }
-
-@Suppress("UNCHECKED_CAST")
-class DetailArtViewModelFactory(private val art: ImageDetail):ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = DetailArtViewModel(art) as T
-
-}

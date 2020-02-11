@@ -1,6 +1,5 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,9 +24,6 @@ class ArtGalleryViewModel(
                 getDefaultArt()
             return _model
         }
-
-    init{
-    }
 
     private fun setResponse(response: SearchResults) {
         _model.value = UiModel.Content(response.toImageDetail())
