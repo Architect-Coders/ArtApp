@@ -15,10 +15,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity.Companion.PHOTO
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.toast
 import eu.bolt.screenshotty.*
@@ -37,7 +36,7 @@ class CameraArtActivity : AppCompatActivity() {
 
     private var contenData: View? = null
 
-    private lateinit var art: ImageDetail
+    private lateinit var art: ArtDetail
     private val viewModel: CameraArtViewModel by currentScope.viewModel(this) {
         parametersOf(art)
     }

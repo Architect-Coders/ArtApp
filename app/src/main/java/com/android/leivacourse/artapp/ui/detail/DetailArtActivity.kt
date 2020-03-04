@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.android.leivacourse.artapp.ui.camera.CameraArtActivity
 import com.android.leivacourse.artapp.R
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.ui.detail.DetailArtViewModel.UiModel
 import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.myStartActivity
@@ -24,7 +24,7 @@ class DetailArtActivity : AppCompatActivity(){
         const val PHOTO = "DetailArtActivity:photo"
     }
 
-    private lateinit var art: ImageDetail
+    private lateinit var art: ArtDetail
     private val viewModel: DetailArtViewModel by currentScope.viewModel(this) {
         parametersOf(art)
     }

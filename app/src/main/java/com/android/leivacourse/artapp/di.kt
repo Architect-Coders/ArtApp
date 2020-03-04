@@ -1,7 +1,7 @@
 package com.android.leivacourse.artapp
 
 import android.app.Application
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryActivity
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel
 import com.android.leivacourse.artapp.ui.camera.CameraArtActivity
@@ -31,13 +31,13 @@ private val artGalleryModule = module {
 
 private val detailArtGalleryModule = module {
     scope(named<DetailArtActivity>()) {
-        viewModel { (imgDetail: ImageDetail) -> DetailArtViewModel(imgDetail) }
+        viewModel { (imgDetail: ArtDetail) -> DetailArtViewModel(imgDetail) }
     }
 }
 
 private val  cameraArtModule = module {
     scope(named<CameraArtActivity>()) {
-        viewModel { (imgDetail: ImageDetail) -> CameraArtViewModel(imgDetail) }
+        viewModel { (imgDetail: ArtDetail) -> CameraArtViewModel(imgDetail) }
     }
 }
 

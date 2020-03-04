@@ -2,17 +2,17 @@ package com.android.leivacourse.artapp.ui.artgallery
 
 import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.api.models.Urls
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 
 import com.android.leivacourse.artapp.api.models.User
 import com.android.leivacourse.artapp.api.models.ProfileImage
 
-fun SearchResults.toImageDetail(): List<ImageDetail> {
-    val items = mutableListOf<ImageDetail>()
+fun SearchResults.toImageDetail(): List<ArtDetail> {
+    val items = mutableListOf<ArtDetail>()
     return with(this) {
         this.results?.forEach { item ->
             items.add(
-                ImageDetail(
+                ArtDetail(
                     item?.urls?.toUrl(),
                     0.toDouble(),
                     item?.description,

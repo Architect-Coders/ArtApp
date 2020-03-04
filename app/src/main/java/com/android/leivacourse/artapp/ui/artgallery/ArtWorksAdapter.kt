@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.android.leivacourse.artapp.R
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.utils.inflate
 import com.android.leivacourse.artapp.utils.loadImage
 import kotlinx.android.synthetic.main.item_artwork.view.*
 import kotlin.properties.Delegates
 
-class ArtWorksAdapter(@NonNull private val listener: (ImageDetail) -> Unit) :
+class ArtWorksAdapter(@NonNull private val listener: (ArtDetail) -> Unit) :
     RecyclerView.Adapter<ArtWorksViewHolder>() {
 
-    var items by Delegates.observable(emptyList<ImageDetail>()) { _, _, _ ->
+    var items by Delegates.observable(emptyList<ArtDetail>()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
@@ -34,7 +34,7 @@ class ArtWorksAdapter(@NonNull private val listener: (ImageDetail) -> Unit) :
 
 class ArtWorksViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(item: ImageDetail, listener: (ImageDetail) -> Unit) {
+    fun bind(item: ArtDetail, listener: (ArtDetail) -> Unit) {
         with(view) {
             item_image.loadImage(item.urls?.small?:"")
             item_username.text = item.user?.name?:"N/A"

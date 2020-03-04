@@ -3,11 +3,10 @@ package com.android.leivacourse.artapp.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.common.Event
 
-class DetailArtViewModel(private val art: ImageDetail): ViewModel(){
+class DetailArtViewModel(private val art: ArtDetail): ViewModel(){
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -16,16 +15,16 @@ class DetailArtViewModel(private val art: ImageDetail): ViewModel(){
         return _model
     }
 
-    private val _navigation = MutableLiveData<Event<ImageDetail>>()
-    val navigation: LiveData<Event<ImageDetail>> = _navigation
+    private val _navigation = MutableLiveData<Event<ArtDetail>>()
+    val navigation: LiveData<Event<ArtDetail>> = _navigation
 
-    class UiModel(val art: ImageDetail)
+    class UiModel(val art: ArtDetail)
 
-    fun favMenuSelected(){
+    fun favMenuSelected() = {
         TODO()
     }
 
-    fun onPreviewPushed(art: ImageDetail) {
+    fun onPreviewPushed(art: ArtDetail) {
         _navigation.value = Event(art)
     }
 
