@@ -89,4 +89,12 @@ class ArtGalleryViewModel(
             )
         }
     }
+
+    fun onFavoriteClicked() = GlobalScope.launch {
+        _model.value?.?.let {
+            val updatedArt = it.copy(favorite = !it.favorite)
+            _model.value = UiModel(updatedArt)
+            GalleryArtRepositoryImpl.updateFavorite(updatedArt)
+        }
+    }
 }

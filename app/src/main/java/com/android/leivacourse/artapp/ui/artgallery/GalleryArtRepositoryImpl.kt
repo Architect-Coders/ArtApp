@@ -1,14 +1,22 @@
 package com.android.leivacourse.artapp.ui.artgallery
 
+import com.android.leivacourse.artapp.ArtApp
 import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.api.service.UnsplashWs
+import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 
 
-class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) :
+class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs, private val application : ArtApp) :
     GalleryArtRepository {
+
+
+    private val db = application.db
+
 
     override suspend fun getArtPhotos(query: String,page: Int, queryPage: Int,orderBy: String, orientation: String): ResultWrapper<Response<SearchResults>> {
         return try {
@@ -39,6 +47,10 @@ class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) :
     }
 
 
+    suspend fun update(imageDetail: ImageDetail) = withContext(Dispatchers.IO) {
+        db.imageDetailDao().updateImage(imageDetail)
+    }
+
     companion object {
 
         private var INSTANCE: GalleryArtRepositoryImpl? = null
@@ -53,6 +65,12 @@ class GalleryArtRepositoryImpl(private val unsplashWs: UnsplashWs) :
         fun destroyInstance() {
             INSTANCE = null
         }
+
+        fun updateFavorite(updatedArt: ImageDetail) {
+
+        }
+
     }
+
 
 }

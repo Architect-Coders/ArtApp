@@ -23,9 +23,10 @@ import com.android.leivacourse.artapp.utils.toast
 import com.arlib.floatingsearchview.FloatingSearchView
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion
 import kotlinx.android.synthetic.main.fragment_lista_obras.*
+import kotlinx.android.synthetic.main.item_artwork.*
 import java.lang.ref.WeakReference
 
-class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
+class ArtGalleryFragment : Fragment(), ArtGalleryContract.View, View.OnClickListener {
 
     private lateinit var lottieAnimation: LottieAnimationView
 
@@ -38,7 +39,7 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
     }
 
     private val mArtAdapter: ArtWorksAdapter by lazy {
-        ArtWorksAdapter {
+        ArtWorksAdapter(this) {
             myStartActivity<DetailArtActivity>(bundleOf(DetailArtActivity.PHOTO to it))
         }
     }
@@ -76,6 +77,7 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
             adapter = mArtAdapter
             layoutManager = GridLayoutManager(context, 2)
         }
+        btn_favorite.setOnClickListener(this)
     }
 
     override fun populateArts(items: List<ImageDetail>) {
@@ -106,6 +108,22 @@ class ArtGalleryFragment : Fragment(), ArtGalleryContract.View {
     override fun onDestroy() {
         mPresenter.onDettach()
         super.onDestroy()
+    }
+
+    override fun onClick(view: View) {
+        when (view.id) {
+            R.id.btn_favorite -> favoriteClicked(view.id)
+            else -> {
+            }
+        }
+    }
+
+    private fun favoriteClicked(id: String) {
+        activity?.favoriteClicked()
+    }
+
+    public fun favoriteClicked(id : Int){
+        viewModel.onFavoriteClicked()
     }
 
 }

@@ -11,7 +11,7 @@ import com.android.leivacourse.artapp.utils.loadImage
 import kotlinx.android.synthetic.main.item_artwork.view.*
 import kotlin.properties.Delegates
 
-class ArtWorksAdapter(@NonNull private val listener: (ImageDetail) -> Unit) :
+class ArtWorksAdapter(@NonNull private val listener: (ImageDetail) -> Unit, private val listenerFavorite : (ImageDetail) -> Unit ) :
     RecyclerView.Adapter<ArtWorksViewHolder>() {
 
     var items by Delegates.observable(emptyList<ImageDetail>()) { _, _, _ ->
@@ -31,18 +31,19 @@ class ArtWorksAdapter(@NonNull private val listener: (ImageDetail) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ArtWorksViewHolder, position: Int) {
-        holder.bind(items[position], listener)
+        holder.bind(items[position], listener, listenerFavorite)
     }
 
 }
 
 class ArtWorksViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(item: ImageDetail, listener: (ImageDetail) -> Unit) {
+    fun bind(item: ImageDetail, listener: (ImageDetail) -> Unit, listenerFavorite : (ImageDetail) -> Unit) {
         with(view) {
             item_image.loadImage(item.urls?.small?:"")
             item_username.text = item.user?.name?:"N/A"
             item_photouser.loadImage(item.user?.profileImage?.small?:"")
+            btn_favorite.setOnClickListener{ listenerFavorite(item)}
             view.setOnClickListener { listener(item) }
         }
     }
