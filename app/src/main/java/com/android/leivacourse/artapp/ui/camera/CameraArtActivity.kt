@@ -9,11 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.CameraX
 import androidx.camera.core.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity.Companion.PHOTO
@@ -77,8 +79,9 @@ class CameraArtActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     fun onCameraBindLivecycle(preview: Preview) {
-        CameraX.bindToLifecycle(this, preview)
+        CameraX.bindToLifecycle(this as LifecycleOwner, preview as CameraSelector)
     }
 
 
