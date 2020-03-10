@@ -12,11 +12,11 @@ fun SearchResults.toImageDetail(): List<ArtDetail> {
     return with(this) {
         this.results?.forEach { item ->
             items.add(
-                ArtDetail(
+                ArtDetail("",
                     item?.urls?.toUrl(),
                     0.toDouble(),
                     item?.description,
-                    item?.id,
+                    //item?.id,
                     item?.user?.toUser()
                 )
             )

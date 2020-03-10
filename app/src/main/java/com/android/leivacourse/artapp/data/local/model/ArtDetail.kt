@@ -1,16 +1,21 @@
 package com.android.leivacourse.artapp.data.local.model
 
 import android.os.Parcelable
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.android.leivacourse.artapp.data.local.Converters
 import kotlinx.android.parcel.Parcelize
 import kotlin.random.Random
 
 @Entity
 @Parcelize
+@TypeConverters(Converters::class)
 data class ArtDetail(
-	@PrimaryKey val id: String? = null,
+	@PrimaryKey
+	@NonNull val id: String,
 	@ColumnInfo(name = "urls") val urls: Urls? = null,
 	@ColumnInfo(name = "price") val randomPrice: Double? = null,
 	@ColumnInfo(name = "description") val description: String? = null,
