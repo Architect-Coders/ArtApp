@@ -5,8 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.common.Event
+import com.android.leivacourse.artapp.utils.ToggleArtFavorite
+import kotlinx.coroutines.*
 
-class DetailArtViewModel(private val art: ArtDetail): ViewModel(){
+
+class DetailArtViewModel(private val art: ArtDetail, private val toggleArtFavorite: ToggleArtFavorite): ViewModel(){
+
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -20,8 +24,14 @@ class DetailArtViewModel(private val art: ArtDetail): ViewModel(){
 
     class UiModel(val art: ArtDetail)
 
-    fun favMenuSelected() = {
-        TODO()
+    fun favMenuSelected() {
+        runBlocking {
+            launch {
+                _model.value?.art?.let {
+                    _model.value = UiModel(toggleArtFavorite.invoke(it))
+                }
+            }
+        }
     }
 
     fun onPreviewPushed(art: ArtDetail) {

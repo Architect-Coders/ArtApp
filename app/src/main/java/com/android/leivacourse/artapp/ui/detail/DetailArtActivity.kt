@@ -10,9 +10,11 @@ import com.android.leivacourse.artapp.ui.camera.CameraArtActivity
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.ui.detail.DetailArtViewModel.UiModel
+import com.android.leivacourse.artapp.utils.app
 import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.myStartActivity
 import kotlinx.android.synthetic.main.activity_detail_art.*
+import kotlinx.android.synthetic.main.item_artwork.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -46,6 +48,8 @@ class DetailArtActivity : AppCompatActivity(){
             }
         })
 
+
+
         btnPreview.setOnClickListener {
             viewModel.onPreviewPushed(art)
         }
@@ -61,7 +65,6 @@ class DetailArtActivity : AppCompatActivity(){
         when (item.itemId) {
             R.id.menu_fav -> {
                 viewModel.favMenuSelected()
-
                 true
             }
             else -> {

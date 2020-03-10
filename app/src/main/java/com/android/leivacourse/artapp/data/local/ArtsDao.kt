@@ -1,9 +1,6 @@
 package com.android.leivacourse.artapp.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.android.leivacourse.artapp.data.local.model.ArtDetail
 
 @Dao
@@ -16,5 +13,8 @@ interface ArtsDao{
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg art: ArtDetail)
+
+    @Delete
+    fun remove(vararg art: ArtDetail)
 
 }
