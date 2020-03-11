@@ -5,15 +5,12 @@ import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.util.Log
-import android.util.Rational
 import android.util.Size
 import android.view.Surface
 import android.view.TextureView
 import android.view.ViewGroup
-import androidx.camera.core.AspectRatio
 import androidx.camera.core.Preview
-//import androidx.camera.core.PreviewConfig
-import androidx.camera.core.impl.PreviewConfig
+import androidx.camera.core.PreviewConfig
 import com.android.leivacourse.artapp.data.DIR_FOLDER_NAME
 import com.android.leivacourse.artapp.data.RESOURCE_IMAGE_NAME
 import java.io.File
@@ -29,23 +26,18 @@ class CameraXUtils{
         fun startCameraForCapture(textureView: TextureView): Preview {
             //====================== Image Preview Config code Start==========================
             // Create configuration object for the viewfinder use case
-  /*          val previewConfig = PreviewConfig.Builder().apply {
-                setTargetAspectRatio(Rational(1, 1))
+           val previewConfig = PreviewConfig.Builder().apply {
                 setTargetResolution(Size(640, 640))
 
             }.build()
-*/
-            val preview = Preview.Builder().apply {
-                setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                setTargetResolution(Size(640, 640))
-            }.build()
+
 
             // Build the viewfinder use case
-       //     val preview = Preview(previewConfig)
+            val preview = Preview(previewConfig)
 
 
             // Every time the viewfinder is updated, recompute layout
-/*            preview.setOnPreviewOutputUpdateListener {
+          preview.setOnPreviewOutputUpdateListener {
                 // To update the SurfaceTexture, we have to remove it and re-add it
                 val parent = textureView.parent as ViewGroup
                 parent.removeView(textureView)
@@ -54,7 +46,7 @@ class CameraXUtils{
                 updateTransform(textureView)
             }
             //====================== Image Preview Config code End==========================
-*/
+
             return preview
         }
 

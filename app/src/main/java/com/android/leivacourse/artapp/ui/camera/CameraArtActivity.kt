@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
 import androidx.camera.core.CameraX
 import androidx.camera.core.Preview
 import androidx.core.app.ActivityCompat
@@ -81,7 +80,7 @@ class CameraArtActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
     fun onCameraBindLivecycle(preview: Preview) {
-        CameraX.bindToLifecycle(this as LifecycleOwner, preview as CameraSelector)
+        CameraX.bindToLifecycle(this as LifecycleOwner, preview)
     }
 
 
