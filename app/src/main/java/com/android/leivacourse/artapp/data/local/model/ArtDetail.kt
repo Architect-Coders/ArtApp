@@ -20,7 +20,7 @@ data class ArtDetail(
 	@ColumnInfo(name = "price") val randomPrice: Double? = null,
 	@ColumnInfo(name = "description") val description: String? = null,
 	@ColumnInfo(name = "user") val user: User? = null,
-	@ColumnInfo(name = "favorite") val favorite: Boolean = false
+	@ColumnInfo(name = "favorite") var favorite: Boolean = false
 ):Parcelable{
 	val getRamdomPrice: Double
 	get()  {

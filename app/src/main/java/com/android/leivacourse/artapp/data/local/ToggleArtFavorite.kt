@@ -15,10 +15,25 @@ class ToggleArtFavorite(private val artRepository: ArtRepository) {
                 break
             }
         }
-        if (isFavorite)
+        if (isFavorite) {
+            art.favorite = false
             artRepository.deleteFavorite(artInDb)
-        else
+        } else {
+            art.favorite = true
             artRepository.insertFavorite(art)
-        copy(favorite = !favorite)
+        }
+       return art
+    }
+
+    suspend fun check(art: ArtDetail): ArtDetail? = with(art) {
+        val arrArt: List<ArtDetail> = artRepository.getFavoriteArt()
+         var artInDb: ArtDetail? = null
+        for (artDetail in arrArt) {
+            if (artDetail.urls?.equals(art.urls)!!) {
+                artInDb = artDetail
+                break
+            }
+        }
+       return artInDb
     }
 }

@@ -48,10 +48,13 @@ class DetailArtActivity : AppCompatActivity(){
             }
         })
 
-
+        viewModel.checkFavorite()
 
         btnPreview.setOnClickListener {
             viewModel.onPreviewPushed(art)
+        }
+        btn_favoritex.setOnClickListener {
+            viewModel.favMenuSelected()
         }
     }
 
@@ -63,10 +66,6 @@ class DetailArtActivity : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
-            R.id.menu_fav -> {
-                viewModel.favMenuSelected()
-                true
-            }
             else -> {
                 finish()
                 super.onOptionsItemSelected(item)
@@ -74,11 +73,14 @@ class DetailArtActivity : AppCompatActivity(){
         }
 
     private fun updateUI(model: UiModel) = with (model.art){
+            val icon = if (favorite) R.drawable.ic_favorite_pushed else R.drawable.ic_favorite
+            btn_favoritex?.setImageDrawable(getDrawable(icon))
             photoDetailToolbar.title = title
             photoDetailImage.loadUrl("${urls?.regular}")
             photoSummary.setArt(model.art)
             photoUser.loadUrl("${user?.profileImage?.small}")
             photoUserName.text=user?.name?:"N/A"
+
         }
 
     }

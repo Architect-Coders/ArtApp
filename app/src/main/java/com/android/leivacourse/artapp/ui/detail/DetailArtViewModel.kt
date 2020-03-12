@@ -34,6 +34,20 @@ class DetailArtViewModel(private val art: ArtDetail, private val toggleArtFavori
         }
     }
 
+    fun checkFavorite() {
+        runBlocking {
+            launch {
+                _model.value?.art?.let {
+                    toggleArtFavorite.check(it)?.let{ artInDb->
+                    _model.value = UiModel(artInDb)
+                }
+
+                }
+            }
+        }
+    }
+
+
     fun onPreviewPushed(art: ArtDetail) {
         _navigation.value = Event(art)
     }
