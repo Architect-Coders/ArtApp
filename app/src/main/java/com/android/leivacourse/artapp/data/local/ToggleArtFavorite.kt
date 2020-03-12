@@ -1,19 +1,24 @@
 package com.android.leivacourse.artapp.utils
 
-import android.util.Log
 import com.android.leivacourse.artapp.data.ArtRepository
 import com.android.leivacourse.artapp.data.local.model.ArtDetail
 
 class ToggleArtFavorite(private val artRepository: ArtRepository) {
     suspend fun invoke(art: ArtDetail): ArtDetail = with(art) {
-        Log.wtf("YEHO","art: "+this.description+" antes operacion: "+artRepository.getFavoriteArt().size)
-        copy(favorite = !favorite).also { ArtDetail ->
-            if (favorite) {
-                artRepository.deleteFavorite(ArtDetail)
-            }else {
-                artRepository.insertFavorite(ArtDetail)
+        val arrArt: List<ArtDetail> = artRepository.getFavoriteArt()
+        lateinit var artInDb: ArtDetail
+        var isFavorite = false
+        for (artDetail in arrArt) {
+            if (artDetail.urls?.equals(art.urls)!!) {
+                isFavorite = true
+                artInDb = artDetail
+                break
             }
-            Log.wtf("YEHO" ,"art: "+ArtDetail.description+"despues cuantos favoritos: "+artRepository.getFavoriteArt().size)
         }
+        if (isFavorite)
+            artRepository.deleteFavorite(artInDb)
+        else
+            artRepository.insertFavorite(art)
+        copy(favorite = !favorite)
     }
 }

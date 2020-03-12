@@ -14,8 +14,8 @@ import kotlin.random.Random
 @Parcelize
 @TypeConverters(Converters::class)
 data class ArtDetail(
-	@PrimaryKey
-	@NonNull val id: String,
+	@PrimaryKey(autoGenerate = true)
+	val id : Int?,
 	@ColumnInfo(name = "urls") val urls: Urls? = null,
 	@ColumnInfo(name = "price") val randomPrice: Double? = null,
 	@ColumnInfo(name = "description") val description: String? = null,

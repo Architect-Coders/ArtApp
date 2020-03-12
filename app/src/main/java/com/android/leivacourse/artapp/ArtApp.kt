@@ -18,6 +18,7 @@ class ArtApp: Application() {
             this,
             ArtsDatabase::class.java,
             "arts-db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+         .build()
     }
 }

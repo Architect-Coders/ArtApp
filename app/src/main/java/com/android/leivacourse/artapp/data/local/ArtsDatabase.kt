@@ -13,7 +13,8 @@ abstract class ArtsDatabase : RoomDatabase() {
             context,
             ArtsDatabase::class.java,
             "arts-db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+         .build()
     }
 
     abstract fun artsDao() : ArtsDao
