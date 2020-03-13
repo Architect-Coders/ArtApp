@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
+import com.android.leivacourse.artapp.ArtApp
 import com.bumptech.glide.Glide
 
 fun ImageView.loadUrl(url: String) {
@@ -28,3 +29,6 @@ fun AppCompatActivity.changeLoaderStatus(lottieAnimationView: LottieAnimationVie
 
 fun Context.toast(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+val Context.app: ArtApp
+    get() = applicationContext as ArtApp

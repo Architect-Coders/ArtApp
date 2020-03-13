@@ -45,7 +45,7 @@
                     android:text="@string/tool_text"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
-            <ImageButton
+           <!-- <ImageButton
                     android:id="@+id/btn_favorite"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -53,7 +53,7 @@
                     android:layout_margin="@dimen/card_spacing"
                     android:src="@drawable/ic_favorite"
                     android:contentDescription="@string/tool_text" />
-
+-->
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

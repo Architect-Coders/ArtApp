@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.core.text.bold
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 
 class CameraArtInfoView @JvmOverloads constructor(context: Context,
                                                   attrs: AttributeSet? = null,
@@ -12,7 +12,7 @@ class CameraArtInfoView @JvmOverloads constructor(context: Context,
 ) : TextView(context, attrs, defStyleAttr) {
 
 
-    fun setDetail(des: ImageDetail) = with(des){
+    fun setDetail(des: ArtDetail) = with(des){
 
         text = androidx.core.text.buildSpannedString {
 

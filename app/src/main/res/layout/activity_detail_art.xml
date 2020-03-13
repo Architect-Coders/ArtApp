@@ -38,10 +38,11 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/black"
             android:alpha="0.8"
+            android:background="@android:color/black"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -55,11 +56,10 @@
                     android:id="@+id/photoSummary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text=""
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:text="" />
-
+                    android:textSize="16sp" />
 
 
             <LinearLayout
@@ -70,46 +70,56 @@
 
                 <ImageView
                         android:id="@+id/photoUser"
-                        android:layout_gravity="center"
                         android:layout_width="32dp"
-                        android:layout_height="32dp"/>
+                        android:layout_height="32dp"
+                        android:layout_gravity="center" />
 
                 <TextView
                         android:id="@+id/photoUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
+                        android:text=""
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:text="" />
+                        android:textSize="16sp" />
 
 
             </LinearLayout>
 
 
-
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
                     android:transitionGroup="true">
 
                 <Button
                         android:id="@+id/btnPreview"
-                        android:backgroundTint="@android:color/white"
-                        android:textColor="@android:color/black"
-                        android:text="Vista Previa"
-                        android:textSize="14sp"
-                        android:typeface="normal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/white"
+                        android:text="Vista Previa"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:typeface="normal" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <ImageButton
+            android:id="@+id/btn_favoritex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_spacing"
+            android:background="@android:color/white"
+            android:contentDescription="@string/tool_text"
+            android:src="@drawable/ic_favorite"
+            app:layout_anchor="@+id/nestedScrollView"
+            app:layout_anchorGravity="end|top" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

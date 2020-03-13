@@ -1,13 +1,21 @@
 package com.android.leivacourse.artapp
 
 import android.app.Application
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.ArtRepository
+import com.android.leivacourse.artapp.data.LocalDataSource
+import com.android.leivacourse.artapp.data.local.ArtsDatabase
+import com.android.leivacourse.artapp.data.local.RoomDataSource
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryActivity
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel
 import com.android.leivacourse.artapp.ui.camera.CameraArtActivity
 import com.android.leivacourse.artapp.ui.camera.CameraArtViewModel
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
 import com.android.leivacourse.artapp.ui.detail.DetailArtViewModel
+import com.android.leivacourse.artapp.utils.ToggleArtFavorite
+import io.fabric.sdk.android.services.settings.IconRequest.build
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,8 +27,19 @@ fun Application.initDI() {
     startKoin {
         androidLogger()
         androidContext(this@initDI)
-        modules(listOf(artGalleryModule, detailArtGalleryModule, cameraArtModule))
+        modules(listOf(appModule, artGalleryModule, dataModule, DetailArtActivityModule, cameraArtModule))
     }
+}
+
+private val appModule = module {
+    single { ArtsDatabase.build(get()) }
+    factory<LocalDataSource> { RoomDataSource(get()) }
+  //  factory<RemoteDataSource> { KitsuDataSource() }
+    single<CoroutineDispatcher> { Dispatchers.Main }
+}
+
+private val dataModule = module {
+    factory { ArtRepository(get()) }
 }
 
 private val artGalleryModule = module {
@@ -29,15 +48,16 @@ private val artGalleryModule = module {
     }
 }
 
-private val detailArtGalleryModule = module {
+private val DetailArtActivityModule = module {
     scope(named<DetailArtActivity>()) {
-        viewModel { (imgDetail: ImageDetail) -> DetailArtViewModel(imgDetail) }
+        viewModel { (imgDetail: ArtDetail) -> DetailArtViewModel(imgDetail, get()) }
+        scoped { ToggleArtFavorite(get()) }
     }
 }
 
 private val  cameraArtModule = module {
     scope(named<CameraArtActivity>()) {
-        viewModel { (imgDetail: ImageDetail) -> CameraArtViewModel(imgDetail) }
+        viewModel { (imgDetail: ArtDetail) -> CameraArtViewModel(imgDetail) }
     }
 }
 

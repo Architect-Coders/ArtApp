@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.android.leivacourse.artapp.api.models.ResultsItem
 import com.android.leivacourse.artapp.api.models.SearchResults
 import com.android.leivacourse.artapp.data.*
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ class ArtGalleryViewModel(
 
     sealed class UiModel {
         object Loading : UiModel()
-        class Content(val artWork: List<ImageDetail>) : UiModel()
+        class Content(val artWork: List<ArtDetail>) : UiModel()
     }
 
     fun getDefaultArt() {

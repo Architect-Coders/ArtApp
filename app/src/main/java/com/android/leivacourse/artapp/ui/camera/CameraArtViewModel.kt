@@ -3,9 +3,9 @@ package com.android.leivacourse.artapp.ui.camera
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 
-class CameraArtViewModel(private val art: ImageDetail):ViewModel(){
+class CameraArtViewModel(private val art: ArtDetail):ViewModel(){
 
     private val _model = MutableLiveData<UiModel>()
 
@@ -15,5 +15,5 @@ class CameraArtViewModel(private val art: ImageDetail):ViewModel(){
             return _model
         }
 
-    class UiModel(val art: ImageDetail)
+    class UiModel(val art: ArtDetail)
 }

@@ -8,11 +8,13 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.android.leivacourse.artapp.ui.camera.CameraArtActivity
 import com.android.leivacourse.artapp.R
-import com.android.leivacourse.artapp.data.local.model.ImageDetail
+import com.android.leivacourse.artapp.data.local.model.ArtDetail
 import com.android.leivacourse.artapp.ui.detail.DetailArtViewModel.UiModel
+import com.android.leivacourse.artapp.utils.app
 import com.android.leivacourse.artapp.utils.loadUrl
 import com.android.leivacourse.artapp.utils.myStartActivity
 import kotlinx.android.synthetic.main.activity_detail_art.*
+import kotlinx.android.synthetic.main.item_artwork.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -24,7 +26,7 @@ class DetailArtActivity : AppCompatActivity(){
         const val PHOTO = "DetailArtActivity:photo"
     }
 
-    private lateinit var art: ImageDetail
+    private lateinit var art: ArtDetail
     private val viewModel: DetailArtViewModel by currentScope.viewModel(this) {
         parametersOf(art)
     }
@@ -46,8 +48,13 @@ class DetailArtActivity : AppCompatActivity(){
             }
         })
 
+        viewModel.checkFavorite()
+
         btnPreview.setOnClickListener {
             viewModel.onPreviewPushed(art)
+        }
+        btn_favoritex.setOnClickListener {
+            viewModel.favMenuSelected()
         }
     }
 
@@ -59,11 +66,6 @@ class DetailArtActivity : AppCompatActivity(){
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
-            R.id.menu_fav -> {
-                viewModel.favMenuSelected()
-
-                true
-            }
             else -> {
                 finish()
                 super.onOptionsItemSelected(item)
@@ -71,11 +73,14 @@ class DetailArtActivity : AppCompatActivity(){
         }
 
     private fun updateUI(model: UiModel) = with (model.art){
+            val icon = if (favorite) R.drawable.ic_favorite_pushed else R.drawable.ic_favorite
+            btn_favoritex?.setImageDrawable(getDrawable(icon))
             photoDetailToolbar.title = title
             photoDetailImage.loadUrl("${urls?.regular}")
             photoSummary.setArt(model.art)
             photoUser.loadUrl("${user?.profileImage?.small}")
             photoUserName.text=user?.name?:"N/A"
+
         }
 
     }
