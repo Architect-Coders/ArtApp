@@ -19,7 +19,7 @@ class DetailArtInfoView @JvmOverloads constructor(
             appendln(description?:"N/A")
 
             bold { append("Autor: ") }
-            appendln(user?.firstName?:"N/A")
+            appendln(user?.name?:"N/A")
 
             bold { append("Localización: ") }
             appendln(user?.location?:"N/A")

@@ -16,7 +16,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="@color/background"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -30,9 +30,9 @@
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/photoDetailToolbar"
+                    android:theme="@style/AppThemeBar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:title="Detail Photo" />
+                    android:layout_height="?attr/actionBarSize" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

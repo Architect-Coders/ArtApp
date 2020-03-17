@@ -41,6 +41,7 @@ class DetailArtActivity : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        title=""
         viewModel.model.observe(this, Observer(::updateUI))
 
         viewModel.navigation.observe(this, Observer { event ->
