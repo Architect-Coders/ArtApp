@@ -70,7 +70,7 @@ class DetailArtActivity : AppCompatActivity(){
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             else -> {
-                finish()
+                onBackPressed()
                 super.onOptionsItemSelected(item)
             }
         }
