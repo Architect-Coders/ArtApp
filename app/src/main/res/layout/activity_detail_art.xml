@@ -7,6 +7,7 @@
         tools:context=".ui.detail.DetailArtActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.DarkOverlay"
@@ -15,7 +16,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="@color/background"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
@@ -29,9 +30,10 @@
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/photoDetailToolbar"
+                    android:theme="@style/AppThemeBar"
+                    app:layout_collapseMode="pin"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:title="Detail Photo" />
+                    android:layout_height="?attr/actionBarSize" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -49,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="16dp"
                 android:padding="16dp"
                 android:transitionGroup="true">
 
@@ -59,7 +62,7 @@
                     android:text=""
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/letter_size" />
 
 
             <LinearLayout
@@ -82,7 +85,7 @@
                         android:text=""
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/letter_size" />
 
 
             </LinearLayout>
@@ -111,15 +114,18 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <ImageButton
-            android:id="@+id/btn_favoritex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_spacing"
-            android:background="@android:color/white"
-            android:contentDescription="@string/tool_text"
-            android:src="@drawable/ic_favorite"
-            app:layout_anchor="@+id/nestedScrollView"
-            app:layout_anchorGravity="end|top" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-60dp"
+        android:layout_marginRight="16dp"
+        app:rippleColor="@color/pressed_color"
+        android:backgroundTint="@color/background"
+        android:src="@drawable/ic_favorite_pushed"
+        app:borderWidth="0dp"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="bottom|right|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

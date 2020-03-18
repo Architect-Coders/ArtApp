@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.android.leivacourse.artapp.R
 import com.android.leivacourse.artapp.api.Retrofit
-import com.android.leivacourse.artapp.data.COL_NUM
+import com.android.leivacourse.artapp.data.COL_NUM_FOR_MOBILE
+import com.android.leivacourse.artapp.data.COL_NUM_FOR_TABLET
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.GetArts
 import com.android.leivacourse.artapp.ui.artgallery.ArtGalleryViewModel.UiModel
 import com.android.leivacourse.artapp.ui.detail.DetailArtActivity
@@ -76,7 +77,11 @@ class ArtGalleryActivity : AppCompatActivity(),
 
         rv_arts.apply {
             adapter = mArtAdapter
-            layoutManager = GridLayoutManager(context, COL_NUM)
+            layoutManager = GridLayoutManager(context, if(resources.getBoolean(R.bool.isTablet)){
+                COL_NUM_FOR_TABLET }
+            else {
+                COL_NUM_FOR_MOBILE
+            })
         }
         sv_arts.setOnSearchListener(this)
     }

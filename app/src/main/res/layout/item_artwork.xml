@@ -43,6 +43,7 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:text="@string/tool_text"
+                android:textSize="@dimen/letter_size"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
            <!-- <ImageButton
